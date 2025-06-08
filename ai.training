@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インタラクティブ研修プランニング | 教育現場におけるAI活用</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: The SPA is designed as a non-linear, thematic hub to allow users (presenters/attendees) to freely explore content. Instead of a rigid 9-step sequence, it's organized into four key sections: 1. **研修概要 (Overview)**: A quick summary of the training's purpose and flow. 2. **AI活用シーン (AI Use Cases)**: An interactive card-based section categorized by teaching activity (Prep, Practice, Admin) for intuitive exploration, enhanced with dynamic AI idea generation. 3. **ワークショップ体験 (Workshop Simulation)**: A hands-on simulation where AI dynamically generates content for chosen themes, making the abstract workshop concept tangible. 4. **効果の可視化 (Impact Visualization)**: A chart to visually represent the benefits of AI. This structure prioritizes user-driven discovery over linear presentation, making the plan more engaging and easier to digest. -->
+    <!-- Visualization & Content Choices: 1. **Training Flow (Goal: Organize)**: Presented as a CSS-based timeline for a clear visual path. Interaction: Hover effects. Method: HTML/Tailwind. 2. **AI Use Case Cards (Goal: Inform/Engage)**: Interactive cards that reveal details on click. New: "Generate more ideas" button calls Gemini API for dynamic content, enhancing interaction. Method: HTML/Tailwind/JS, Gemini API. 3. **Workshop Simulator (Goal: Engage/Demonstrate)**: Buttons trigger JS to call Gemini API, populating text areas with real-time AI-generated examples, simulating the creative process. Method: JS data objects, DOM manipulation, Gemini API. 4. **Impact Chart (Goal: Compare/Persuade)**: A Chart.js bar chart visualizes potential time savings, providing a compelling data point. Method: Chart.js with responsive canvas container. This approach uses the best interactive method for each piece of information, enhancing understanding. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #fefbf3; color: #4a5568; }
+        .nav-link { transition: all 0.3s ease; border-bottom: 2px solid transparent; }
+        .nav-link:hover, .nav-link.active { color: #0891b2; border-bottom-color: #0891b2; }
+        .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .section-fade-in { animation: fadeIn 1s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .loading-spinner { border: 4px solid rgba(0, 0, 0, 0.1); border-left-color: #0891b2; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-amber-50">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl md:text-2xl font-bold text-slate-700">ICTとAI活用研修</h1>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#overview" class="nav-link text-slate-600 font-medium pb-1">研修概要</a>
+                    <a href="#use-cases" class="nav-link text-slate-600 font-medium pb-1">AI活用シーン</a>
+                    <a href="#workshop" class="nav-link text-slate-600 font-medium pb-1">ワークショップ体験</a>
+                    <a href="#impact" class="nav-link text-slate-600 font-medium pb-1">効果の可視化</a>
+                </div>
+                <div class="md:hidden">
+                    <select id="mobile-nav" class="bg-white border border-slate-300 rounded-md py-1 px-2 text-slate-700">
+                        <option value="#overview">研修概要</option>
+                        <option value="#use-cases">AI活用シーン</option>
+                        <option value="#workshop">ワークショップ体験</option>
+                        <option value="#impact">効果の可視化</option>
+                    </select>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-12">
+        
+        <section id="overview" class="mb-16 md:mb-24 section-fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4">教育の未来を拓く、AIとの協働</h2>
+            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-12">この研修では、ICT機器、特にAIを日々の教育活動にどう取り入れ、業務の効率化と教育の質の向上を実現するかを学びます。単なるツール紹介に留まらず、先生方一人ひとりがAIを「頼れるパートナー」として活用するための、実践的なアイデアとスキルを習得することを目的とします。</p>
+            
+            <div class="relative mt-8">
+                <div class="hidden md:block absolute left-0 top-1/2 w-full h-0.5 bg-cyan-200"></div>
+                <div class="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-9 gap-4 text-center">
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold mb-2">1</div>
+                        <span class="text-xs text-slate-500">導入</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold mb-2">2</div>
+                        <span class="text-xs text-slate-500">目標共有</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold mb-2">3</div>
+                        <span class="text-xs text-slate-500">現状と課題</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold mb-2">4</div>
+                        <span class="text-xs text-slate-500">基礎知識</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold mb-2">5</div>
+                        <span class="text-xs text-slate-500">活用事例</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-cyan-700 text-white flex items-center justify-center font-bold mb-2">6</div>
+                        <span class="text-xs text-slate-500">ワークショップ</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-cyan-700 text-white flex items-center justify-center font-bold mb-2">7</div>
+                        <span class="text-xs text-slate-500">発表</span>
+                    </div>
+                     <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-cyan-800 text-white flex items-center justify-center font-bold mb-2">8</div>
+                        <span class="text-xs text-slate-500">まとめ</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-8 h-8 rounded-full bg-cyan-800 text-white flex items-center justify-center font-bold mb-2">9</div>
+                        <span class="text-xs text-slate-500">閉会</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="use-cases" class="mb-16 md:mb-24 section-fade-in" style="animation-delay: 0.2s;">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4">AIは、先生の「頼れるパートナー」</h2>
+            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-12">AIは、授業準備から校務まで、様々な場面で先生方をサポートします。ここでは具体的な活用シーンを「授業準備」「授業実践」「校務効率化」の３つのカテゴリに分けてご紹介します。カードをクリックして詳細をご覧ください。</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card bg-white p-6 rounded-lg shadow-lg" data-category="授業準備">
+                    <h3 class="text-xl font-bold text-teal-700 mb-3">💡 授業準備</h3>
+                    <p class="text-slate-600 mb-4">教材作成、評価基準の策定など、準備にかかる時間を大幅に短縮します。</p>
+                    <ul class="space-y-3 text-sm">
+                        <li class="interactive-item" data-title="教材アイデアの生成" data-content="「小学5年生向けのSDGsに関するクイズを5問作成して」と指示するだけで、多様なアイデアを得られます。">✨ 教材アイデアの壁打ち</li>
+                        <li class="interactive-item" data-title="評価基準の明確化" data-content="「この作文課題のルーブリック評価の観点を3つ提案して」のように、客観的な評価基準を作成できます。">⚖️ 評価基準の素案作成</li>
+                        <li class="interactive-item" data-title="板書計画の構造化" data-content="単元のキーワードを渡すだけで、論理的な流れを持つ板書計画を構造化してくれます。">칠판 板書計画の構造化</li>
+                    </ul>
+                    <button class="generate-ideas-btn bg-cyan-500 text-white px-4 py-2 rounded-full mt-4 hover:bg-cyan-600 transition w-full">✨ さらにアイデアを生成</button>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-lg" data-category="授業実践">
+                    <h3 class="text-xl font-bold text-sky-700 mb-3">🚀 授業実践</h3>
+                    <p class="text-slate-600 mb-4">個別最適化された学びや、生徒の創造性を引き出す活動を支援します。</p>
+                     <ul class="space-y-3 text-sm">
+                        <li class="interactive-item" data-title="個別フィードバック支援" data-content="生徒の回答をAIに入力し、「この回答の良い点と改善点を教えて」と尋ねることで、個別指導のヒントを得られます。">🗣️ 個別フィードバック支援</li>
+                        <li class="interactive-item" data-title="多様な意見の提示" data-content="「この社会問題について、賛成・反対以外の第三の視点は？」のように、多角的な思考を促す問いを生成します。">🌐 思考を深める発問生成</li>
+                        <li class="interactive-item" data-title="創造的な協働学習" data-content="「この物語の続きを、登場人物Aの視点で書いて」といった指示で、生徒の創作活動を刺激します。">🎨 創造的ライティング支援</li>
+                    </ul>
+                    <button class="generate-ideas-btn bg-cyan-500 text-white px-4 py-2 rounded-full mt-4 hover:bg-cyan-600 transition w-full">✨ さらにアイデアを生成</button>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-lg" data-category="校務効率化">
+                    <h3 class="text-xl font-bold text-amber-700 mb-3"> efficiently 校務効率化</h3>
+                    <p class="text-slate-600 mb-4">文書作成や情報収集など、日々の煩雑な業務をスマートにこなします。</p>
+                    <ul class="space-y-3 text-sm">
+                        <li class="interactive-item" data-title="保護者連絡文の作成" data-content="「来月の遠足に関する保護者向け案内文を、丁寧な言葉遣いで作成して」といった依頼で、質の高い文書を素早く作成。">保護者向け連絡文の作成</li>
+                        <li class="interactive-item" data-title="研修内容の要約" data-content="長い研修資料のテキストを貼り付け、「この内容を300字で要約して」と指示するだけで、要点を瞬時に把握できます。">研修内容の要約</li>
+                        <li class="interactive-item" data-title="情報収集の高速化" data-content="「最新のGIGAスクール構想に関する動向を教えて」のように、専門的な情報も効率的に収集できます。">情報収集と整理</li>
+                    </ul>
+                    <button class="generate-ideas-btn bg-cyan-500 text-white px-4 py-2 rounded-full mt-4 hover:bg-cyan-600 transition w-full">✨ さらにアイデアを生成</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="workshop" class="mb-16 md:mb-24 bg-teal-50/50 rounded-2xl p-6 md:p-10 section-fade-in" style="animation-delay: 0.4s;">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4">体験しよう！AIとの授業デザイン</h2>
+            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-12">ここでは、AIを活用した授業デザインのプロセスを擬似体験できます。テーマを選んでボタンをクリックすると、AIが生成した授業の各要素が下に表示されます。AIとの対話を通じて、授業のアイデアが形になっていく様子をご覧ください。</p>
+            <div class="text-center mb-8 space-x-2 md:space-x-4">
+                <button class="workshop-btn bg-white border border-teal-300 text-teal-800 px-4 py-2 rounded-full hover:bg-teal-100 transition" data-theme="kokugo">国語「物語の続きを創作」</button>
+                <button class="workshop-btn bg-white border border-teal-300 text-teal-800 px-4 py-2 rounded-full hover:bg-teal-100 transition" data-theme="shakai">社会「未来の街づくり」</button>
+                <button class="workshop-btn bg-white border border-teal-300 text-teal-800 px-4 py-2 rounded-full hover:bg-teal-100 transition" data-theme="eigo">英語「異文化交流のスキット作成」</button>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 text-sm">
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h4 class="font-bold text-teal-700 mb-2">1. 導入の問いかけ</h4>
+                    <pre id="ws-output-1" class="bg-slate-100 p-3 rounded text-slate-600 whitespace-pre-wrap h-32 overflow-y-auto">テーマを選んでください</pre>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h4 class="font-bold text-teal-700 mb-2">2. 活動のヒント</h4>
+                    <pre id="ws-output-2" class="bg-slate-100 p-3 rounded text-slate-600 whitespace-pre-wrap h-32 overflow-y-auto"></pre>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h4 class="font-bold text-teal-700 mb-2">3. 評価の観点</h4>
+                    <pre id="ws-output-3" class="bg-slate-100 p-3 rounded text-slate-600 whitespace-pre-wrap h-32 overflow-y-auto"></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="mb-8 section-fade-in" style="animation-delay: 0.6s;">
+             <h2 class="text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4">AI活用による効果の可視化</h2>
+            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-12">AIを導入することで、具体的にどの業務がどれだけ効率化される可能性があるのでしょうか。このグラフは、AI活用による各業務の潜在的な時間短縮率を示しています。浮いた時間を、より創造的な教育活動や生徒との対話に充てることができます。</p>
+            <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-xl">
+                 <div class="chart-container">
+                    <canvas id="impactChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-white mt-16">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p class="mb-2">今後の継続的な学習のために</p>
+            <p class="text-sm text-slate-400">文部科学省「GIGAスクール構想」や各種教育系メディアで最新情報をご確認ください。</p>
+        </div>
+    </footer>
+
+    <div id="modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full p-6 relative section-fade-in">
+            <button id="close-modal" class="absolute top-2 right-3 text-2xl text-slate-500 hover:text-slate-800">&times;</button>
+            <h3 id="modal-title" class="text-xl font-bold text-cyan-800 mb-4"></h3>
+            <p id="modal-content" class="text-slate-600"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_KEY = ""; 
+            const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
+
+            const sendPromptToGemini = async (prompt) => {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+
+                try {
+                    const response = await fetch(API_URL + API_KEY, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        console.error('Unexpected API response structure:', result);
+                        return 'アイデアの生成に失敗しました。';
+                    }
+                } catch (error) {
+                    console.error('Error calling Gemini API:', error);
+                    return 'ネットワークエラーによりアイデアの生成に失敗しました。';
+                }
+            };
+
+            const workshopBtns = document.querySelectorAll('.workshop-btn');
+            const wsOutput1 = document.getElementById('ws-output-1');
+            const wsOutput2 = document.getElementById('ws-output-2');
+            const wsOutput3 = document.getElementById('ws-output-3');
+
+            const generateWorkshopContent = async (theme) => {
+                wsOutput1.innerHTML = '<span class="loading-spinner"></span> 生成中...';
+                wsOutput2.innerHTML = '<span class="loading-spinner"></span> 生成中...';
+                wsOutput3.innerHTML = '<span class="loading-spinner"></span> 生成中...';
+
+                let prompt1, prompt2, prompt3;
+
+                switch (theme) {
+                    case 'kokugo':
+                        prompt1 = "国語の授業で「物語の続きを創作する」というテーマの導入で、生徒が興味を持つような問いかけを3つ提案してください。箇条書きでお願いします。";
+                        prompt2 = "国語の授業で「物語の続きを創作する」活動のヒントとして、生徒の創造性を引き出す具体的なアドバイスを2つ提案してください。箇条書きでお願いします。";
+                        prompt3 = "国語の授業で「物語の続きを創作する」という課題の評価観点を3つ提案してください。箇条書きでお願いします。";
+                        break;
+                    case 'shakai':
+                        prompt1 = "社会科の授業で「未来の街づくり」というテーマの導入で、生徒が関心を持つような問いかけを3つ提案してください。箇条書きでお願いします。";
+                        prompt2 = "社会科の授業で「未来の街づくり」活動のヒントとして、多角的な視点や持続可能性を考慮させる具体的なアドバイスを2つ提案してください。箇条書きでお願いします。";
+                        prompt3 = "社会科の授業で「未来の街づくり」という課題の評価観点を3つ提案してください。箇条書きでお願いします。";
+                        break;
+                    case 'eigo':
+                        prompt1 = "英語の授業で「異文化交流のスキット作成」というテーマの導入で、生徒が積極的に参加したくなるような問いかけを3つ提案してください。箇条書きでお願いします。回答は英語でお願いします。";
+                        prompt2 = "英語の授業で「異文化交流のスキット作成」活動のヒントとして、効果的なコミュニケーションや異文化理解を深める具体的なアドバイスを2つ提案してください。箇条書きでお願いします。回答は英語でお願いします。";
+                        prompt3 = "英語の授業で「異文化交流のスキット作成」という課題の評価観点を3つ提案してください。箇条書きでお願いします。回答は英語でお願いします。";
+                        break;
+                }
+
+                try {
+                    const [res1, res2, res3] = await Promise.all([
+                        sendPromptToGemini(prompt1),
+                        sendPromptToGemini(prompt2),
+                        sendPromptToGemini(prompt3)
+                    ]);
+                    wsOutput1.textContent = res1;
+                    wsOutput2.textContent = res2;
+                    wsOutput3.textContent = res3;
+                } catch (error) {
+                    console.error('Error generating workshop content:', error);
+                    wsOutput1.textContent = 'コンテンツの生成中にエラーが発生しました。';
+                    wsOutput2.textContent = 'コンテンツの生成中にエラーが発生しました。';
+                    wsOutput3.textContent = 'コンテンツの生成中にエラーが発生しました。';
+                }
+            };
+
+            workshopBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const theme = btn.dataset.theme;
+                    generateWorkshopContent(theme);
+                    workshopBtns.forEach(b => b.classList.remove('bg-teal-100'));
+                    btn.classList.add('bg-teal-100');
+                });
+            });
+
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.addEventListener('change', (e) => {
+                window.location.hash = e.target.value;
+            });
+            
+            const interactiveItems = document.querySelectorAll('.interactive-item');
+            const modal = document.getElementById('modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalContent = document.getElementById('modal-content');
+
+            interactiveItems.forEach(item => {
+                item.style.cursor = 'pointer';
+                item.addEventListener('click', () => {
+                    modalTitle.textContent = item.dataset.title;
+                    modalContent.textContent = item.dataset.content;
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                });
+            });
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            };
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            const generateIdeasBtns = document.querySelectorAll('.generate-ideas-btn');
+            generateIdeasBtns.forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const category = btn.closest('.card').dataset.category;
+                    modalTitle.textContent = `${category}のAI活用アイデア`;
+                    modalContent.innerHTML = '<span class="loading-spinner"></span> アイデア生成中...';
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+
+                    const prompt = `あなたは教育者です。教育現場の${category}におけるAIの活用アイデアを、具体的で実践的な例を3つ箇条書きで提案してください。それぞれのアイデアは200字以内で説明してください。`;
+                    const generatedIdeas = await sendPromptToGemini(prompt);
+                    modalContent.textContent = generatedIdeas;
+                });
+            });
+
+
+            const ctx = document.getElementById('impactChart').getContext('2d');
+            const impactChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['教材・テスト作成', '評価・フィードバック', '保護者対応・文書作成', '情報収集・研修'],
+                    datasets: [{
+                        label: '潜在的な時間短縮率 (%)',
+                        data: [50, 40, 60, 45],
+                        backgroundColor: [
+                            'rgba(13, 148, 136, 0.6)',
+                            'rgba(14, 165, 233, 0.6)',
+                            'rgba(217, 119, 6, 0.6)',
+                            'rgba(107, 114, 128, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(13, 148, 136, 1)',
+                            'rgba(14, 165, 233, 1)',
+                            'rgba(217, 119, 6, 1)',
+                            'rgba(107, 114, 128, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%'
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(200, 200, 200, 0.2)'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
