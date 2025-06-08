@@ -1,423 +1,428 @@
-{\rtf1\ansi\ansicpg932\cocoartf2822
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset128 HiraKakuProN-W3;\f1\fnil\fcharset0 AppleColorEmoji;\f2\fnil\fcharset129 AppleSDGothicNeo-Regular;
-}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
-\paperw11905\paperh16837\margl1133\margr1133\margb1133\margt1133
-\deftab720
-\pard\pardeftab720\partightenfactor0
-
-\f0\fs22 \cf2 \up0 \nosupersub \ulnone <!DOCTYPE html>\
-<html lang="ja" class="scroll-smooth">\
-<head>\
-    <meta charset="UTF-8">\
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
-    <title>\'83\'43\'83\'93\'83\'5e\'83\'89\'83\'4e\'83\'65\'83\'42\'83\'75\'8c\'a4\'8f\'43\'83\'76\'83\'89\'83\'93\'83\'6a\'83\'93\'83\'4f | \'8b\'b3\'88\'e7\'8c\'bb\'8f\'ea\'82\'c9\'82\'a8\'82\'af\'82\'e9AI\'8a\'88\'97\'70</title>\
-    <script src="https://cdn.tailwindcss.com"></script>\
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>\
-    <link rel="preconnect" href="https://fonts.googleapis.com">\
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght400;500;700&display=swap" rel="stylesheet">\
-    <!-- Chosen Palette: Calm Harmony -->\
-    <!-- Application Structure Plan: The SPA is designed as a non-linear, thematic hub to allow users (presenters/attendees) to freely explore content. Instead of a rigid 9-step sequence, it's organized into four key sections: 1. **\'8c\'a4\'8f\'43\'8a\'54\'97\'76 (Overview)**: A quick summary of the training's purpose and flow. 2. **AI\'8a\'88\'97\'70\'83\'56\'81\'5b\'83\'93 (AI Use Cases)**: An interactive card-based section categorized by teaching activity (Prep, Practice, Admin) for intuitive exploration, enhanced with dynamic AI idea generation. 3. **\'83\'8f\'81\'5b\'83\'4e\'83\'56\'83\'87\'83\'62\'83\'76\'91\'cc\'8c\'b1 (Workshop Simulation)**: A hands-on simulation where AI dynamically generates content for chosen themes, making the abstract workshop concept tangible. 4. **\'8c\'f8\'89\'ca\'82\'cc\'89\'c2\'8e\'8b\'89\'bb (Impact Visualization)**: A chart to visually represent the benefits of AI. This structure prioritizes user-driven discovery over linear presentation, making the plan more engaging and easier to digest. -->\
-    <!-- Visualization & Content Choices: 1. **Training Flow (Goal: Organize)**: Presented as a CSS-based timeline for a clear visual path. Interaction: Hover effects. Method: HTML/Tailwind. 2. **AI Use Case Cards (Goal: Inform/Engage)**: Interactive cards that reveal details on click. New: "Generate more ideas" button calls Gemini API for dynamic content, enhancing interaction. Method: HTML/Tailwind/JS, Gemini API. 3. **Workshop Simulator (Goal: Engage/Demonstrate)**: Buttons trigger JS to call Gemini API, populating text areas with real-time AI-generated examples, simulating the creative process. Method: JS data objects, DOM manipulation, Gemini API. 4. **Impact Chart (Goal: Compare/Persuade)**: A Chart.js bar chart visualizes potential time savings, providing a compelling data point. Method: Chart.js with responsive canvas container. This approach uses the best interactive method for each piece of information, enhancing understanding. -->\
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->\
-    <style>\
-        body \{ font-family: 'Noto Sans JP', sans-serif; background-color: #fefbf3; color: #4a5568; \}\
-        .nav-link \{ transition: all 0.3s ease; border-bottom: 2px solid transparent; \}\
-        .nav-link:hover, .nav-link.active \{ color: #0891b2; border-bottom-color: #0891b2; \}\
-        .card \{ transition: transform 0.3s ease, box-shadow 0.3s ease; \}\
-        .card:hover \{ transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); \}\
-        .section-fade-in \{ animation: fadeIn 1s ease-in-out; \}\
-        @keyframes fadeIn \{ from \{ opacity: 0; transform: translateY(20px); \} to \{ opacity: 1; transform: translateY(0); \} \}\
-        .chart-container \{ position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; \}\
-        @media (min-width: 768px) \{ .chart-container \{ height: 400px; \} \}\
-        .loading-spinner \{ border: 4px solid rgba(0, 0, 0, 0.1); border-left-color: #0891b2; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; \}\
-        @keyframes spin \{ 0% \{ transform: rotate(0deg); \} 100% \{ transform: rotate(360deg); \} \}\
-    </style>\
-</head>\
-<body class="bg-amber-50">\
-\
-    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">\
-        <nav class="container mx-auto px-6 py-3">\
-            <div class="flex justify-between items-center">\
-                <h1 class="text-xl md:text-2xl font-bold text-slate-700">ICT\'82\'c6AI\'8a\'88\'97\'70\'8c\'a4\'8f\'43</h1>\
-                <div class="hidden md:flex space-x-8">\
-                    <a href="#overview" class="nav-link text-slate-600 font-medium pb-1">\'8c\'a4\'8f\'43\'8a\'54\'97\'76</a>\
-                    <a href="#use-cases" class="nav-link text-slate-600 font-medium pb-1">AI\'8a\'88\'97\'70\'83\'56\'81\'5b\'83\'93</a>\
-                    <a href="#workshop" class="nav-link text-slate-600 font-medium pb-1">\'83\'8f\'81\'5b\'83\'4e\'83\'56\'83\'87\'83\'62\'83\'76\'91\'cc\'8c\'b1</a>\
-                    <a href="#impact" class="nav-link text-slate-600 font-medium pb-1">\'8c\'f8\'89\'ca\'82\'cc\'89\'c2\'8e\'8b\'89\'bb</a>\
-                </div>\
-                <div class="md:hidden">\
-                    <select id="mobile-nav" class="bg-white border border-slate-300 rounded-md py-1 px-2 text-slate-700">\
-                        <option value="#overview">\'8c\'a4\'8f\'43\'8a\'54\'97\'76</option>\
-                        <option value="#use-cases">AI\'8a\'88\'97\'70\'83\'56\'81\'5b\'83\'93</option>\
-                        <option value="#workshop">\'83\'8f\'81\'5b\'83\'4e\'83\'56\'83\'87\'83\'62\'83\'76\'91\'cc\'8c\'b1</option>\
-                        <option value="#impact">\'8c\'f8\'89\'ca\'82\'cc\'89\'c2\'8e\'8b\'89\'bb</option>\
-                    </select>\
-                </div>\
-            </div>\
-        </nav>\
-    </header>\
-\
-    <main class="container mx-auto px-6 py-8 md:py-12">\
-        \
-        <section id="overview" class="mb-16 md:mb-24 section-fade-in">\
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4">\'8b\'b3\'88\'e7\'82\'cc\'96\'a2\'97\'88\'82\'f0\'91\'f1\'82\'ad\'81\'41AI\'82\'c6\'82\'cc\'8b\'a6\'93\'ad</h2>\
-            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-12">\'82\'b1\'82\'cc\'8c\'a4\'8f\'43\'82\'c5\'82\'cd\'81\'41ICT\'8b\'40\'8a\'ed\'81\'41\'93\'c1\'82\'c9AI\'82\'f0\'93\'fa\'81\'58\'82\'cc\'8b\'b3\'88\'e7\'8a\'88\'93\'ae\'82\'c9\'82\'c7\'82\'a4\'8e\'e6\'82\'e8\'93\'fc\'82\'ea\'81\'41\'8b\'c6\'96\'b1\'82\'cc\'8c\'f8\'97\'a6\'89\'bb\'82\'c6\'8b\'b3\'88\'e7\'82\'cc\'8e\'bf\'82\'cc\'8c\'fc\'8f\'e3\'82\'f0\'8e\'c0\'8c\'bb\'82\'b7\'82\'e9\'82\'a9\'82\'f0\'8a\'77\'82\'d1\'82\'dc\'82\'b7\'81\'42\'92\'50\'82\'c8\'82\'e9\'83\'63\'81\'5b\'83\'8b\'8f\'d0\'89\'ee\'82\'c9\'97\'af\'82\'dc\'82\'e7\'82\'b8\'81\'41\'90\'e6\'90\'b6\'95\'fb\'88\'ea\'90\'6c\'82\'d0\'82\'c6\'82\'e8\'82\'aaAI\'82\'f0\'81\'75\'97\'8a\'82\'ea\'82\'e9\'83\'70\'81\'5b\'83\'67\'83\'69\'81\'5b\'81\'76\'82\'c6\'82\'b5\'82\'c4\'8a\'88\'97\'70\'82\'b7\'82\'e9\'82\'bd\'82\'df\'82\'cc\'81\'41\'8e\'c0\'91\'48\'93\'49\'82\'c8\'83\'41\'83\'43\'83\'66\'83\'41\'82\'c6\'83\'58\'83\'4c\'83\'8b\'82\'f0\'8f\'4b\'93\'be\'82\'b7\'82\'e9\'82\'b1\'82\'c6\'82\'f0\'96\'da\'93\'49\'82\'c6\'82\'b5\'82\'dc\'82\'b7\'81\'42</p>\
-            \
-            <div class="relative mt-8">\
-                <div class="hidden md:block absolute left-0 top-1/2 w-full h-0.5 bg-cyan-200"></div>\
-                <div class="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-9 gap-4 text-center">\
-                    <div class="flex flex-col items-center">\
-                        <div class="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold mb-2">1</div>\
-                        <span class="text-xs text-slate-500">\'93\'b1\'93\'fc</span>\
-                    </div>\
-                    <div class="flex flex-col items-center">\
-                        <div class="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold mb-2">2</div>\
-                        <span class="text-xs text-slate-500">\'96\'da\'95\'57\'8b\'a4\'97\'4c</span>\
-                    </div>\
-                    <div class="flex flex-col items-center">\
-                        <div class="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold mb-2">3</div>\
-                        <span class="text-xs text-slate-500">\'8c\'bb\'8f\'f3\'82\'c6\'89\'db\'91\'e8</span>\
-                    </div>\
-                    <div class="flex flex-col items-center">\
-                        <div class="w-8 h-8 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold mb-2">4</div>\
-                        <span class="text-xs text-slate-500">\'8a\'ee\'91\'62\'92\'6d\'8e\'af</span>\
-                    </div>\
-                    <div class="flex flex-col items-center">\
-                        <div class="w-8 h-8 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold mb-2">5</div>\
-                        <span class="text-xs text-slate-500">\'8a\'88\'97\'70\'8e\'96\'97\'e1</span>\
-                    </div>\
-                    <div class="flex flex-col items-center">\
-                        <div class="w-8 h-8 rounded-full bg-cyan-700 text-white flex items-center justify-center font-bold mb-2">6</div>\
-                        <span class="text-xs text-slate-500">\'83\'8f\'81\'5b\'83\'4e\'83\'56\'83\'87\'83\'62\'83\'76</span>\
-                    </div>\
-                    <div class="flex flex-col items-center">\
-                        <div class="w-8 h-8 rounded-full bg-cyan-700 text-white flex items-center justify-center font-bold mb-2">7</div>\
-                        <span class="text-xs text-slate-500">\'94\'ad\'95\'5c</span>\
-                    </div>\
-                     <div class="flex flex-col items-center">\
-                        <div class="w-8 h-8 rounded-full bg-cyan-800 text-white flex items-center justify-center font-bold mb-2">8</div>\
-                        <span class="text-xs text-slate-500">\'82\'dc\'82\'c6\'82\'df</span>\
-                    </div>\
-                    <div class="flex flex-col items-center">\
-                        <div class="w-8 h-8 rounded-full bg-cyan-800 text-white flex items-center justify-center font-bold mb-2">9</div>\
-                        <span class="text-xs text-slate-500">\'95\'c2\'89\'ef</span>\
-                    </div>\
-                </div>\
-            </div>\
-        </section>\
-\
-        <section id="use-cases" class="mb-16 md:mb-24 section-fade-in" style="animation-delay: 0.2s;">\
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4">AI\'82\'cd\'81\'41\'90\'e6\'90\'b6\'82\'cc\'81\'75\'97\'8a\'82\'ea\'82\'e9\'83\'70\'81\'5b\'83\'67\'83\'69\'81\'5b\'81\'76</h2>\
-            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-12">AI\'82\'cd\'81\'41\'8e\'f6\'8b\'c6\'8f\'80\'94\'f5\'82\'a9\'82\'e7\'8d\'5a\'96\'b1\'82\'dc\'82\'c5\'81\'41\'97\'6c\'81\'58\'82\'c8\'8f\'ea\'96\'ca\'82\'c5\'90\'e6\'90\'b6\'95\'fb\'82\'f0\'83\'54\'83\'7c\'81\'5b\'83\'67\'82\'b5\'82\'dc\'82\'b7\'81\'42\'82\'b1\'82\'b1\'82\'c5\'82\'cd\'8b\'ef\'91\'cc\'93\'49\'82\'c8\'8a\'88\'97\'70\'83\'56\'81\'5b\'83\'93\'82\'f0\'81\'75\'8e\'f6\'8b\'c6\'8f\'80\'94\'f5\'81\'76\'81\'75\'8e\'f6\'8b\'c6\'8e\'c0\'91\'48\'81\'76\'81\'75\'8d\'5a\'96\'b1\'8c\'f8\'97\'a6\'89\'bb\'81\'76\'82\'cc\'82\'52\'82\'c2\'82\'cc\'83\'4a\'83\'65\'83\'53\'83\'8a\'82\'c9\'95\'aa\'82\'af\'82\'c4\'82\'b2\'8f\'d0\'89\'ee\'82\'b5\'82\'dc\'82\'b7\'81\'42\'83\'4a\'81\'5b\'83\'68\'82\'f0\'83\'4e\'83\'8a\'83\'62\'83\'4e\'82\'b5\'82\'c4\'8f\'da\'8d\'d7\'82\'f0\'82\'b2\'97\'97\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42</p>\
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">\
-                <div class="card bg-white p-6 rounded-lg shadow-lg" data-category="\'8e\'f6\'8b\'c6\'8f\'80\'94\'f5">\
-                    <h3 class="text-xl font-bold text-teal-700 mb-3">
-\f1 \uc0\u55357 \u56481 
-\f0  \'8e\'f6\'8b\'c6\'8f\'80\'94\'f5</h3>\
-                    <p class="text-slate-600 mb-4">\'8b\'b3\'8d\'de\'8d\'ec\'90\'ac\'81\'41\'95\'5d\'89\'bf\'8a\'ee\'8f\'80\'82\'cc\'8d\'f4\'92\'e8\'82\'c8\'82\'c7\'81\'41\'8f\'80\'94\'f5\'82\'c9\'82\'a9\'82\'a9\'82\'e9\'8e\'9e\'8a\'d4\'82\'f0\'91\'e5\'95\'9d\'82\'c9\'92\'5a\'8f\'6b\'82\'b5\'82\'dc\'82\'b7\'81\'42</p>\
-                    <ul class="space-y-3 text-sm">\
-                        <li class="interactive-item" data-title="\'8b\'b3\'8d\'de\'83\'41\'83\'43\'83\'66\'83\'41\'82\'cc\'90\'b6\'90\'ac" data-content="\'81\'75\'8f\'ac\'8a\'775\'94\'4e\'90\'b6\'8c\'fc\'82\'af\'82\'ccSDGs\'82\'c9\'8a\'d6\'82\'b7\'82\'e9\'83\'4e\'83\'43\'83\'59\'82\'f05\'96\'e2\'8d\'ec\'90\'ac\'82\'b5\'82\'c4\'81\'76\'82\'c6\'8e\'77\'8e\'a6\'82\'b7\'82\'e9\'82\'be\'82\'af\'82\'c5\'81\'41\'91\'bd\'97\'6c\'82\'c8\'83\'41\'83\'43\'83\'66\'83\'41\'82\'f0\'93\'be\'82\'e7\'82\'ea\'82\'dc\'82\'b7\'81\'42">
-\f1 \uc0\u10024 
-\f0  \'8b\'b3\'8d\'de\'83\'41\'83\'43\'83\'66\'83\'41\'82\'cc\'95\'c7\'91\'c5\'82\'bf</li>\
-                        <li class="interactive-item" data-title="\'95\'5d\'89\'bf\'8a\'ee\'8f\'80\'82\'cc\'96\'be\'8a\'6d\'89\'bb" data-content="\'81\'75\'82\'b1\'82\'cc\'8d\'ec\'95\'b6\'89\'db\'91\'e8\'82\'cc\'83\'8b\'81\'5b\'83\'75\'83\'8a\'83\'62\'83\'4e\'95\'5d\'89\'bf\'82\'cc\'8a\'cf\'93\'5f\'82\'f03\'82\'c2\'92\'f1\'88\'c4\'82\'b5\'82\'c4\'81\'76\'82\'cc\'82\'e6\'82\'a4\'82\'c9\'81\'41\'8b\'71\'8a\'cf\'93\'49\'82\'c8\'95\'5d\'89\'bf\'8a\'ee\'8f\'80\'82\'f0\'8d\'ec\'90\'ac\'82\'c5\'82\'ab\'82\'dc\'82\'b7\'81\'42">
-\f1 \uc0\u9878 \u65039 
-\f0  \'95\'5d\'89\'bf\'8a\'ee\'8f\'80\'82\'cc\'91\'66\'88\'c4\'8d\'ec\'90\'ac</li>\
-                        <li class="interactive-item" data-title="\'94\'c2\'8f\'91\'8c\'76\'89\'e6\'82\'cc\'8d\'5c\'91\'a2\'89\'bb" data-content="\'92\'50\'8c\'b3\'82\'cc\'83\'4c\'81\'5b\'83\'8f\'81\'5b\'83\'68\'82\'f0\'93\'6e\'82\'b7\'82\'be\'82\'af\'82\'c5\'81\'41\'98\'5f\'97\'9d\'93\'49\'82\'c8\'97\'ac\'82\'ea\'82\'f0\'8e\'9d\'82\'c2\'94\'c2\'8f\'91\'8c\'76\'89\'e6\'82\'f0\'8d\'5c\'91\'a2\'89\'bb\'82\'b5\'82\'c4\'82\'ad\'82\'ea\'82\'dc\'82\'b7\'81\'42">
-\f2 \'c4\'a5\'c6\'c7
-\f0  \'94\'c2\'8f\'91\'8c\'76\'89\'e6\'82\'cc\'8d\'5c\'91\'a2\'89\'bb</li>\
-                    </ul>\
-                    <button class="generate-ideas-btn bg-cyan-500 text-white px-4 py-2 rounded-full mt-4 hover:bg-cyan-600 transition w-full">
-\f1 \uc0\u10024 
-\f0  \'82\'b3\'82\'e7\'82\'c9\'83\'41\'83\'43\'83\'66\'83\'41\'82\'f0\'90\'b6\'90\'ac</button>\
-                </div>\
-                <div class="card bg-white p-6 rounded-lg shadow-lg" data-category="\'8e\'f6\'8b\'c6\'8e\'c0\'91\'48">\
-                    <h3 class="text-xl font-bold text-sky-700 mb-3">
-\f1 \uc0\u55357 \u56960 
-\f0  \'8e\'f6\'8b\'c6\'8e\'c0\'91\'48</h3>\
-                    <p class="text-slate-600 mb-4">\'8c\'c2\'95\'ca\'8d\'c5\'93\'4b\'89\'bb\'82\'b3\'82\'ea\'82\'bd\'8a\'77\'82\'d1\'82\'e2\'81\'41\'90\'b6\'93\'6b\'82\'cc\'91\'6e\'91\'a2\'90\'ab\'82\'f0\'88\'f8\'82\'ab\'8f\'6f\'82\'b7\'8a\'88\'93\'ae\'82\'f0\'8e\'78\'89\'87\'82\'b5\'82\'dc\'82\'b7\'81\'42</p>\
-                     <ul class="space-y-3 text-sm">\
-                        <li class="interactive-item" data-title="\'8c\'c2\'95\'ca\'83\'74\'83\'42\'81\'5b\'83\'68\'83\'6f\'83\'62\'83\'4e\'8e\'78\'89\'87" data-content="\'90\'b6\'93\'6b\'82\'cc\'89\'f1\'93\'9a\'82\'f0AI\'82\'c9\'93\'fc\'97\'cd\'82\'b5\'81\'41\'81\'75\'82\'b1\'82\'cc\'89\'f1\'93\'9a\'82\'cc\'97\'c7\'82\'a2\'93\'5f\'82\'c6\'89\'fc\'91\'50\'93\'5f\'82\'f0\'8b\'b3\'82\'a6\'82\'c4\'81\'76\'82\'c6\'90\'71\'82\'cb\'82\'e9\'82\'b1\'82\'c6\'82\'c5\'81\'41\'8c\'c2\'95\'ca\'8e\'77\'93\'b1\'82\'cc\'83\'71\'83\'93\'83\'67\'82\'f0\'93\'be\'82\'e7\'82\'ea\'82\'dc\'82\'b7\'81\'42">
-\f1 \uc0\u55357 \u56803 \u65039 
-\f0  \'8c\'c2\'95\'ca\'83\'74\'83\'42\'81\'5b\'83\'68\'83\'6f\'83\'62\'83\'4e\'8e\'78\'89\'87</li>\
-                        <li class="interactive-item" data-title="\'91\'bd\'97\'6c\'82\'c8\'88\'d3\'8c\'a9\'82\'cc\'92\'f1\'8e\'a6" data-content="\'81\'75\'82\'b1\'82\'cc\'8e\'d0\'89\'ef\'96\'e2\'91\'e8\'82\'c9\'82\'c2\'82\'a2\'82\'c4\'81\'41\'8e\'5e\'90\'ac\'81\'45\'94\'bd\'91\'ce\'88\'c8\'8a\'4f\'82\'cc\'91\'e6\'8e\'4f\'82\'cc\'8e\'8b\'93\'5f\'82\'cd\'81\'48\'81\'76\'82\'cc\'82\'e6\'82\'a4\'82\'c9\'81\'41\'91\'bd\'8a\'70\'93\'49\'82\'c8\'8e\'76\'8d\'6c\'82\'f0\'91\'a3\'82\'b7\'96\'e2\'82\'a2\'82\'f0\'90\'b6\'90\'ac\'82\'b5\'82\'dc\'82\'b7\'81\'42">
-\f1 \uc0\u55356 \u57104 
-\f0  \'8e\'76\'8d\'6c\'82\'f0\'90\'5b\'82\'df\'82\'e9\'94\'ad\'96\'e2\'90\'b6\'90\'ac</li>\
-                        <li class="interactive-item" data-title="\'91\'6e\'91\'a2\'93\'49\'82\'c8\'8b\'a6\'93\'ad\'8a\'77\'8f\'4b" data-content="\'81\'75\'82\'b1\'82\'cc\'95\'a8\'8c\'ea\'82\'cc\'91\'b1\'82\'ab\'82\'f0\'81\'41\'93\'6f\'8f\'ea\'90\'6c\'95\'a8A\'82\'cc\'8e\'8b\'93\'5f\'82\'c5\'8f\'91\'82\'a2\'82\'c4\'81\'76\'82\'c6\'82\'a2\'82\'c1\'82\'bd\'8e\'77\'8e\'a6\'82\'c5\'81\'41\'90\'b6\'93\'6b\'82\'cc\'91\'6e\'8d\'ec\'8a\'88\'93\'ae\'82\'f0\'8e\'68\'8c\'83\'82\'b5\'82\'dc\'82\'b7\'81\'42">
-\f1 \uc0\u55356 \u57256 
-\f0  \'91\'6e\'91\'a2\'93\'49\'83\'89\'83\'43\'83\'65\'83\'42\'83\'93\'83\'4f\'8e\'78\'89\'87</li>\
-                    </ul>\
-                    <button class="generate-ideas-btn bg-cyan-500 text-white px-4 py-2 rounded-full mt-4 hover:bg-cyan-600 transition w-full">
-\f1 \uc0\u10024 
-\f0  \'82\'b3\'82\'e7\'82\'c9\'83\'41\'83\'43\'83\'66\'83\'41\'82\'f0\'90\'b6\'90\'ac</button>\
-                </div>\
-                <div class="card bg-white p-6 rounded-lg shadow-lg" data-category="\'8d\'5a\'96\'b1\'8c\'f8\'97\'a6\'89\'bb">\
-                    <h3 class="text-xl font-bold text-amber-700 mb-3"> efficiently \'8d\'5a\'96\'b1\'8c\'f8\'97\'a6\'89\'bb</h3>\
-                    <p class="text-slate-600 mb-4">\'95\'b6\'8f\'91\'8d\'ec\'90\'ac\'82\'e2\'8f\'ee\'95\'f1\'8e\'fb\'8f\'57\'82\'c8\'82\'c7\'81\'41\'93\'fa\'81\'58\'82\'cc\'94\'cf\'8e\'47\'82\'c8\'8b\'c6\'96\'b1\'82\'f0\'83\'58\'83\'7d\'81\'5b\'83\'67\'82\'c9\'82\'b1\'82\'c8\'82\'b5\'82\'dc\'82\'b7\'81\'42</p>\
-                    <ul class="space-y-3 text-sm">\
-                        <li class="interactive-item" data-title="\'95\'db\'8c\'ec\'8e\'d2\'98\'41\'97\'8d\'95\'b6\'82\'cc\'8d\'ec\'90\'ac" data-content="\'81\'75\'97\'88\'8c\'8e\'82\'cc\'89\'93\'91\'ab\'82\'c9\'8a\'d6\'82\'b7\'82\'e9\'95\'db\'8c\'ec\'8e\'d2\'8c\'fc\'82\'af\'88\'c4\'93\'e0\'95\'b6\'82\'f0\'81\'41\'92\'9a\'94\'4a\'82\'c8\'8c\'be\'97\'74\'8c\'ad\'82\'a2\'82\'c5\'8d\'ec\'90\'ac\'82\'b5\'82\'c4\'81\'76\'82\'c6\'82\'a2\'82\'c1\'82\'bd\'88\'cb\'97\'8a\'82\'c5\'81\'41\'8e\'bf\'82\'cc\'8d\'82\'82\'a2\'95\'b6\'8f\'91\'82\'f0\'91\'66\'91\'81\'82\'ad\'8d\'ec\'90\'ac\'81\'42">\'95\'db\'8c\'ec\'8e\'d2\'8c\'fc\'82\'af\'98\'41\'97\'8d\'95\'b6\'82\'cc\'8d\'ec\'90\'ac</li>\
-                        <li class="interactive-item" data-title="\'8c\'a4\'8f\'43\'93\'e0\'97\'65\'82\'cc\'97\'76\'96\'f1" data-content="\'92\'b7\'82\'a2\'8c\'a4\'8f\'43\'8e\'91\'97\'bf\'82\'cc\'83\'65\'83\'4c\'83\'58\'83\'67\'82\'f0\'93\'5c\'82\'e8\'95\'74\'82\'af\'81\'41\'81\'75\'82\'b1\'82\'cc\'93\'e0\'97\'65\'82\'f0300\'8e\'9a\'82\'c5\'97\'76\'96\'f1\'82\'b5\'82\'c4\'81\'76\'82\'c6\'8e\'77\'8e\'a6\'82\'b7\'82\'e9\'82\'be\'82\'af\'82\'c5\'81\'41\'97\'76\'93\'5f\'82\'f0\'8f\'75\'8e\'9e\'82\'c9\'94\'63\'88\'ac\'82\'c5\'82\'ab\'82\'dc\'82\'b7\'81\'42">\'8c\'a4\'8f\'43\'93\'e0\'97\'65\'82\'cc\'97\'76\'96\'f1</li>\
-                        <li class="interactive-item" data-title="\'8f\'ee\'95\'f1\'8e\'fb\'8f\'57\'82\'cc\'8d\'82\'91\'ac\'89\'bb" data-content="\'81\'75\'8d\'c5\'90\'56\'82\'ccGIGA\'83\'58\'83\'4e\'81\'5b\'83\'8b\'8d\'5c\'91\'7a\'82\'c9\'8a\'d6\'82\'b7\'82\'e9\'93\'ae\'8c\'fc\'82\'f0\'8b\'b3\'82\'a6\'82\'c4\'81\'76\'82\'cc\'82\'e6\'82\'a4\'82\'c9\'81\'41\'90\'ea\'96\'e5\'93\'49\'82\'c8\'8f\'ee\'95\'f1\'82\'e0\'8c\'f8\'97\'a6\'93\'49\'82\'c9\'8e\'fb\'8f\'57\'82\'c5\'82\'ab\'82\'dc\'82\'b7\'81\'42">\'8f\'ee\'95\'f1\'8e\'fb\'8f\'57\'82\'c6\'90\'ae\'97\'9d</li>\
-                    </ul>\
-                    <button class="generate-ideas-btn bg-cyan-500 text-white px-4 py-2 rounded-full mt-4 hover:bg-cyan-600 transition w-full">
-\f1 \uc0\u10024 
-\f0  \'82\'b3\'82\'e7\'82\'c9\'83\'41\'83\'43\'83\'66\'83\'41\'82\'f0\'90\'b6\'90\'ac</button>\
-                </div>\
-            </div>\
-        </section>\
-\
-        <section id="workshop" class="mb-16 md:mb-24 bg-teal-50/50 rounded-2xl p-6 md:p-10 section-fade-in" style="animation-delay: 0.4s;">\
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4">\'91\'cc\'8c\'b1\'82\'b5\'82\'e6\'82\'a4\'81\'49AI\'82\'c6\'82\'cc\'8e\'f6\'8b\'c6\'83\'66\'83\'55\'83\'43\'83\'93</h2>\
-            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-12">\'82\'b1\'82\'b1\'82\'c5\'82\'cd\'81\'41AI\'82\'f0\'8a\'88\'97\'70\'82\'b5\'82\'bd\'8e\'f6\'8b\'c6\'83\'66\'83\'55\'83\'43\'83\'93\'82\'cc\'83\'76\'83\'8d\'83\'5a\'83\'58\'82\'f0\'8b\'5b\'8e\'97\'91\'cc\'8c\'b1\'82\'c5\'82\'ab\'82\'dc\'82\'b7\'81\'42\'83\'65\'81\'5b\'83\'7d\'82\'f0\'91\'49\'82\'f1\'82\'c5\'83\'7b\'83\'5e\'83\'93\'82\'f0\'83\'4e\'83\'8a\'83\'62\'83\'4e\'82\'b7\'82\'e9\'82\'c6\'81\'41AI\'82\'aa\'90\'b6\'90\'ac\'82\'b5\'82\'bd\'8e\'f6\'8b\'c6\'82\'cc\'8a\'65\'97\'76\'91\'66\'82\'aa\'89\'ba\'82\'c9\'95\'5c\'8e\'a6\'82\'b3\'82\'ea\'82\'dc\'82\'b7\'81\'42AI\'82\'c6\'82\'cc\'91\'ce\'98\'62\'82\'f0\'92\'ca\'82\'b6\'82\'c4\'81\'41\'8e\'f6\'8b\'c6\'82\'cc\'83\'41\'83\'43\'83\'66\'83\'41\'82\'aa\'8c\'60\'82\'c9\'82\'c8\'82\'c1\'82\'c4\'82\'a2\'82\'ad\'97\'6c\'8e\'71\'82\'f0\'82\'b2\'97\'97\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42</p>\
-            <div class="text-center mb-8 space-x-2 md:space-x-4">\
-                <button class="workshop-btn bg-white border border-teal-300 text-teal-800 px-4 py-2 rounded-full hover:bg-teal-100 transition" data-theme="kokugo">\'8d\'91\'8c\'ea\'81\'75\'95\'a8\'8c\'ea\'82\'cc\'91\'b1\'82\'ab\'82\'f0\'91\'6e\'8d\'ec\'81\'76</button>\
-                <button class="workshop-btn bg-white border border-teal-300 text-teal-800 px-4 py-2 rounded-full hover:bg-teal-100 transition" data-theme="shakai">\'8e\'d0\'89\'ef\'81\'75\'96\'a2\'97\'88\'82\'cc\'8a\'58\'82\'c3\'82\'ad\'82\'e8\'81\'76</button>\
-                <button class="workshop-btn bg-white border border-teal-300 text-teal-800 px-4 py-2 rounded-full hover:bg-teal-100 transition" data-theme="eigo">\'89\'70\'8c\'ea\'81\'75\'88\'d9\'95\'b6\'89\'bb\'8c\'f0\'97\'ac\'82\'cc\'83\'58\'83\'4c\'83\'62\'83\'67\'8d\'ec\'90\'ac\'81\'76</button>\
-            </div>\
-            <div class="grid md:grid-cols-3 gap-6 text-sm">\
-                <div class="bg-white p-4 rounded-lg shadow">\
-                    <h4 class="font-bold text-teal-700 mb-2">1. \'93\'b1\'93\'fc\'82\'cc\'96\'e2\'82\'a2\'82\'a9\'82\'af</h4>\
-                    <pre id="ws-output-1" class="bg-slate-100 p-3 rounded text-slate-600 whitespace-pre-wrap h-32 overflow-y-auto">\'83\'65\'81\'5b\'83\'7d\'82\'f0\'91\'49\'82\'f1\'82\'c5\'82\'ad\'82\'be\'82\'b3\'82\'a2</pre>\
-                </div>\
-                <div class="bg-white p-4 rounded-lg shadow">\
-                    <h4 class="font-bold text-teal-700 mb-2">2. \'8a\'88\'93\'ae\'82\'cc\'83\'71\'83\'93\'83\'67</h4>\
-                    <pre id="ws-output-2" class="bg-slate-100 p-3 rounded text-slate-600 whitespace-pre-wrap h-32 overflow-y-auto"></pre>\
-                </div>\
-                <div class="bg-white p-4 rounded-lg shadow">\
-                    <h4 class="font-bold text-teal-700 mb-2">3. \'95\'5d\'89\'bf\'82\'cc\'8a\'cf\'93\'5f</h4>\
-                    <pre id="ws-output-3" class="bg-slate-100 p-3 rounded text-slate-600 whitespace-pre-wrap h-32 overflow-y-auto"></pre>\
-                </div>\
-            </div>\
-        </section>\
-\
-        <section id="impact" class="mb-8 section-fade-in" style="animation-delay: 0.6s;">\
-             <h2 class="text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4">AI\'8a\'88\'97\'70\'82\'c9\'82\'e6\'82\'e9\'8c\'f8\'89\'ca\'82\'cc\'89\'c2\'8e\'8b\'89\'bb</h2>\
-            <p class="text-center max-w-3xl mx-auto text-slate-600 mb-12">AI\'82\'f0\'93\'b1\'93\'fc\'82\'b7\'82\'e9\'82\'b1\'82\'c6\'82\'c5\'81\'41\'8b\'ef\'91\'cc\'93\'49\'82\'c9\'82\'c7\'82\'cc\'8b\'c6\'96\'b1\'82\'aa\'82\'c7\'82\'ea\'82\'be\'82\'af\'8c\'f8\'97\'a6\'89\'bb\'82\'b3\'82\'ea\'82\'e9\'89\'c2\'94\'5c\'90\'ab\'82\'aa\'82\'a0\'82\'e9\'82\'cc\'82\'c5\'82\'b5\'82\'e5\'82\'a4\'82\'a9\'81\'42\'82\'b1\'82\'cc\'83\'4f\'83\'89\'83\'74\'82\'cd\'81\'41AI\'8a\'88\'97\'70\'82\'c9\'82\'e6\'82\'e9\'8a\'65\'8b\'c6\'96\'b1\'82\'cc\'90\'f6\'8d\'dd\'93\'49\'82\'c8\'8e\'9e\'8a\'d4\'92\'5a\'8f\'6b\'97\'a6\'82\'f0\'8e\'a6\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7\'81\'42\'95\'82\'82\'a2\'82\'bd\'8e\'9e\'8a\'d4\'82\'f0\'81\'41\'82\'e6\'82\'e8\'91\'6e\'91\'a2\'93\'49\'82\'c8\'8b\'b3\'88\'e7\'8a\'88\'93\'ae\'82\'e2\'90\'b6\'93\'6b\'82\'c6\'82\'cc\'91\'ce\'98\'62\'82\'c9\'8f\'5b\'82\'c4\'82\'e9\'82\'b1\'82\'c6\'82\'aa\'82\'c5\'82\'ab\'82\'dc\'82\'b7\'81\'42</p>\
-            <div class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-xl">\
-                 <div class="chart-container">\
-                    <canvas id="impactChart"></canvas>\
-                </div>\
-            </div>\
-        </section>\
-    </main>\
-\
-    <footer class="bg-slate-800 text-white mt-16">\
-        <div class="container mx-auto px-6 py-8 text-center">\
-            <p class="mb-2">\'8d\'a1\'8c\'e3\'82\'cc\'8c\'70\'91\'b1\'93\'49\'82\'c8\'8a\'77\'8f\'4b\'82\'cc\'82\'bd\'82\'df\'82\'c9</p>\
-            <p class="text-sm text-slate-400">\'95\'b6\'95\'94\'89\'c8\'8a\'77\'8f\'c8\'81\'75GIGA\'83\'58\'83\'4e\'81\'5b\'83\'8b\'8d\'5c\'91\'7a\'81\'76\'82\'e2\'8a\'65\'8e\'ed\'8b\'b3\'88\'e7\'8c\'6e\'83\'81\'83\'66\'83\'42\'83\'41\'82\'c5\'8d\'c5\'90\'56\'8f\'ee\'95\'f1\'82\'f0\'82\'b2\'8a\'6d\'94\'46\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42</p>\
-        </div>\
-    </footer>\
-\
-    <div id="modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">\
-        <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full p-6 relative section-fade-in">\
-            <button id="close-modal" class="absolute top-2 right-3 text-2xl text-slate-500 hover:text-slate-800">&times;</button>\
-            <h3 id="modal-title" class="text-xl font-bold text-cyan-800 mb-4"></h3>\
-            <p id="modal-content" class="text-slate-600"></p>\
-        </div>\
-    </div>\
-\
-    <script>\
-        document.addEventListener('DOMContentLoaded', () => \{\
-            const API_KEY = ""; \
-            const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";\
-\
-            const sendPromptToGemini = async (prompt) => \{\
-                let chatHistory = [];\
-                chatHistory.push(\{ role: "user", parts: [\{ text: prompt \}] \});\
-                const payload = \{ contents: chatHistory \};\
-\
-                try \{\
-                    const response = await fetch(API_URL + API_KEY, \{\
-                        method: 'POST',\
-                        headers: \{ 'Content-Type': 'application/json' \},\
-                        body: JSON.stringify(payload)\
-                    \});\
-                    const result = await response.json();\
-                    if (result.candidates && result.candidates.length > 0 &&\
-                        result.candidates[0].content && result.candidates[0].content.parts &&\
-                        result.candidates[0].content.parts.length > 0) \{\
-                        return result.candidates[0].content.parts[0].text;\
-                    \} else \{\
-                        console.error('Unexpected API response structure:', result);\
-                        return '\'83\'41\'83\'43\'83\'66\'83\'41\'82\'cc\'90\'b6\'90\'ac\'82\'c9\'8e\'b8\'94\'73\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42';\
-                    \}\
-                \} catch (error) \{\
-                    console.error('Error calling Gemini API:', error);\
-                    return '\'83\'6c\'83\'62\'83\'67\'83\'8f\'81\'5b\'83\'4e\'83\'47\'83\'89\'81\'5b\'82\'c9\'82\'e6\'82\'e8\'83\'41\'83\'43\'83\'66\'83\'41\'82\'cc\'90\'b6\'90\'ac\'82\'c9\'8e\'b8\'94\'73\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42';\
-                \}\
-            \};\
-\
-            const workshopBtns = document.querySelectorAll('.workshop-btn');\
-            const wsOutput1 = document.getElementById('ws-output-1');\
-            const wsOutput2 = document.getElementById('ws-output-2');\
-            const wsOutput3 = document.getElementById('ws-output-3');\
-\
-            const generateWorkshopContent = async (theme) => \{\
-                wsOutput1.innerHTML = '<span class="loading-spinner"></span> \'90\'b6\'90\'ac\'92\'86...';\
-                wsOutput2.innerHTML = '<span class="loading-spinner"></span> \'90\'b6\'90\'ac\'92\'86...';\
-                wsOutput3.innerHTML = '<span class="loading-spinner"></span> \'90\'b6\'90\'ac\'92\'86...';\
-\
-                let prompt1, prompt2, prompt3;\
-\
-                switch (theme) \{\
-                    case 'kokugo':\
-                        prompt1 = "\'8d\'91\'8c\'ea\'82\'cc\'8e\'f6\'8b\'c6\'82\'c5\'81\'75\'95\'a8\'8c\'ea\'82\'cc\'91\'b1\'82\'ab\'82\'f0\'91\'6e\'8d\'ec\'82\'b7\'82\'e9\'81\'76\'82\'c6\'82\'a2\'82\'a4\'83\'65\'81\'5b\'83\'7d\'82\'cc\'93\'b1\'93\'fc\'82\'c5\'81\'41\'90\'b6\'93\'6b\'82\'aa\'8b\'bb\'96\'a1\'82\'f0\'8e\'9d\'82\'c2\'82\'e6\'82\'a4\'82\'c8\'96\'e2\'82\'a2\'82\'a9\'82\'af\'82\'f03\'82\'c2\'92\'f1\'88\'c4\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42\'89\'d3\'8f\'f0\'8f\'91\'82\'ab\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42";\
-                        prompt2 = "\'8d\'91\'8c\'ea\'82\'cc\'8e\'f6\'8b\'c6\'82\'c5\'81\'75\'95\'a8\'8c\'ea\'82\'cc\'91\'b1\'82\'ab\'82\'f0\'91\'6e\'8d\'ec\'82\'b7\'82\'e9\'81\'76\'8a\'88\'93\'ae\'82\'cc\'83\'71\'83\'93\'83\'67\'82\'c6\'82\'b5\'82\'c4\'81\'41\'90\'b6\'93\'6b\'82\'cc\'91\'6e\'91\'a2\'90\'ab\'82\'f0\'88\'f8\'82\'ab\'8f\'6f\'82\'b7\'8b\'ef\'91\'cc\'93\'49\'82\'c8\'83\'41\'83\'68\'83\'6f\'83\'43\'83\'58\'82\'f02\'82\'c2\'92\'f1\'88\'c4\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42\'89\'d3\'8f\'f0\'8f\'91\'82\'ab\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42";\
-                        prompt3 = "\'8d\'91\'8c\'ea\'82\'cc\'8e\'f6\'8b\'c6\'82\'c5\'81\'75\'95\'a8\'8c\'ea\'82\'cc\'91\'b1\'82\'ab\'82\'f0\'91\'6e\'8d\'ec\'82\'b7\'82\'e9\'81\'76\'82\'c6\'82\'a2\'82\'a4\'89\'db\'91\'e8\'82\'cc\'95\'5d\'89\'bf\'8a\'cf\'93\'5f\'82\'f03\'82\'c2\'92\'f1\'88\'c4\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42\'89\'d3\'8f\'f0\'8f\'91\'82\'ab\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42";\
-                        break;\
-                    case 'shakai':\
-                        prompt1 = "\'8e\'d0\'89\'ef\'89\'c8\'82\'cc\'8e\'f6\'8b\'c6\'82\'c5\'81\'75\'96\'a2\'97\'88\'82\'cc\'8a\'58\'82\'c3\'82\'ad\'82\'e8\'81\'76\'82\'c6\'82\'a2\'82\'a4\'83\'65\'81\'5b\'83\'7d\'82\'cc\'93\'b1\'93\'fc\'82\'c5\'81\'41\'90\'b6\'93\'6b\'82\'aa\'8a\'d6\'90\'53\'82\'f0\'8e\'9d\'82\'c2\'82\'e6\'82\'a4\'82\'c8\'96\'e2\'82\'a2\'82\'a9\'82\'af\'82\'f03\'82\'c2\'92\'f1\'88\'c4\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42\'89\'d3\'8f\'f0\'8f\'91\'82\'ab\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42";\
-                        prompt2 = "\'8e\'d0\'89\'ef\'89\'c8\'82\'cc\'8e\'f6\'8b\'c6\'82\'c5\'81\'75\'96\'a2\'97\'88\'82\'cc\'8a\'58\'82\'c3\'82\'ad\'82\'e8\'81\'76\'8a\'88\'93\'ae\'82\'cc\'83\'71\'83\'93\'83\'67\'82\'c6\'82\'b5\'82\'c4\'81\'41\'91\'bd\'8a\'70\'93\'49\'82\'c8\'8e\'8b\'93\'5f\'82\'e2\'8e\'9d\'91\'b1\'89\'c2\'94\'5c\'90\'ab\'82\'f0\'8d\'6c\'97\'b6\'82\'b3\'82\'b9\'82\'e9\'8b\'ef\'91\'cc\'93\'49\'82\'c8\'83\'41\'83\'68\'83\'6f\'83\'43\'83\'58\'82\'f02\'82\'c2\'92\'f1\'88\'c4\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42\'89\'d3\'8f\'f0\'8f\'91\'82\'ab\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42";\
-                        prompt3 = "\'8e\'d0\'89\'ef\'89\'c8\'82\'cc\'8e\'f6\'8b\'c6\'82\'c5\'81\'75\'96\'a2\'97\'88\'82\'cc\'8a\'58\'82\'c3\'82\'ad\'82\'e8\'81\'76\'82\'c6\'82\'a2\'82\'a4\'89\'db\'91\'e8\'82\'cc\'95\'5d\'89\'bf\'8a\'cf\'93\'5f\'82\'f03\'82\'c2\'92\'f1\'88\'c4\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42\'89\'d3\'8f\'f0\'8f\'91\'82\'ab\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42";\
-                        break;\
-                    case 'eigo':\
-                        prompt1 = "\'89\'70\'8c\'ea\'82\'cc\'8e\'f6\'8b\'c6\'82\'c5\'81\'75\'88\'d9\'95\'b6\'89\'bb\'8c\'f0\'97\'ac\'82\'cc\'83\'58\'83\'4c\'83\'62\'83\'67\'8d\'ec\'90\'ac\'81\'76\'82\'c6\'82\'a2\'82\'a4\'83\'65\'81\'5b\'83\'7d\'82\'cc\'93\'b1\'93\'fc\'82\'c5\'81\'41\'90\'b6\'93\'6b\'82\'aa\'90\'cf\'8b\'c9\'93\'49\'82\'c9\'8e\'51\'89\'c1\'82\'b5\'82\'bd\'82\'ad\'82\'c8\'82\'e9\'82\'e6\'82\'a4\'82\'c8\'96\'e2\'82\'a2\'82\'a9\'82\'af\'82\'f03\'82\'c2\'92\'f1\'88\'c4\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42\'89\'d3\'8f\'f0\'8f\'91\'82\'ab\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42\'89\'f1\'93\'9a\'82\'cd\'89\'70\'8c\'ea\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42";\
-                        prompt2 = "\'89\'70\'8c\'ea\'82\'cc\'8e\'f6\'8b\'c6\'82\'c5\'81\'75\'88\'d9\'95\'b6\'89\'bb\'8c\'f0\'97\'ac\'82\'cc\'83\'58\'83\'4c\'83\'62\'83\'67\'8d\'ec\'90\'ac\'81\'76\'8a\'88\'93\'ae\'82\'cc\'83\'71\'83\'93\'83\'67\'82\'c6\'82\'b5\'82\'c4\'81\'41\'8c\'f8\'89\'ca\'93\'49\'82\'c8\'83\'52\'83\'7e\'83\'85\'83\'6a\'83\'50\'81\'5b\'83\'56\'83\'87\'83\'93\'82\'e2\'88\'d9\'95\'b6\'89\'bb\'97\'9d\'89\'f0\'82\'f0\'90\'5b\'82\'df\'82\'e9\'8b\'ef\'91\'cc\'93\'49\'82\'c8\'83\'41\'83\'68\'83\'6f\'83\'43\'83\'58\'82\'f02\'82\'c2\'92\'f1\'88\'c4\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42\'89\'d3\'8f\'f0\'8f\'91\'82\'ab\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42\'89\'f1\'93\'9a\'82\'cd\'89\'70\'8c\'ea\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42";\
-                        prompt3 = "\'89\'70\'8c\'ea\'82\'cc\'8e\'f6\'8b\'c6\'82\'c5\'81\'75\'88\'d9\'95\'b6\'89\'bb\'8c\'f0\'97\'ac\'82\'cc\'83\'58\'83\'4c\'83\'62\'83\'67\'8d\'ec\'90\'ac\'81\'76\'82\'c6\'82\'a2\'82\'a4\'89\'db\'91\'e8\'82\'cc\'95\'5d\'89\'bf\'8a\'cf\'93\'5f\'82\'f03\'82\'c2\'92\'f1\'88\'c4\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42\'89\'d3\'8f\'f0\'8f\'91\'82\'ab\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42\'89\'f1\'93\'9a\'82\'cd\'89\'70\'8c\'ea\'82\'c5\'82\'a8\'8a\'e8\'82\'a2\'82\'b5\'82\'dc\'82\'b7\'81\'42";\
-                        break;\
-                \}\
-\
-                try \{\
-                    const [res1, res2, res3] = await Promise.all([\
-                        sendPromptToGemini(prompt1),\
-                        sendPromptToGemini(prompt2),\
-                        sendPromptToGemini(prompt3)\
-                    ]);\
-                    wsOutput1.textContent = res1;\
-                    wsOutput2.textContent = res2;\
-                    wsOutput3.textContent = res3;\
-                \} catch (error) \{\
-                    console.error('Error generating workshop content:', error);\
-                    wsOutput1.textContent = '\'83\'52\'83\'93\'83\'65\'83\'93\'83\'63\'82\'cc\'90\'b6\'90\'ac\'92\'86\'82\'c9\'83\'47\'83\'89\'81\'5b\'82\'aa\'94\'ad\'90\'b6\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42';\
-                    wsOutput2.textContent = '\'83\'52\'83\'93\'83\'65\'83\'93\'83\'63\'82\'cc\'90\'b6\'90\'ac\'92\'86\'82\'c9\'83\'47\'83\'89\'81\'5b\'82\'aa\'94\'ad\'90\'b6\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42';\
-                    wsOutput3.textContent = '\'83\'52\'83\'93\'83\'65\'83\'93\'83\'63\'82\'cc\'90\'b6\'90\'ac\'92\'86\'82\'c9\'83\'47\'83\'89\'81\'5b\'82\'aa\'94\'ad\'90\'b6\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42';\
-                \}\
-            \};\
-\
-            workshopBtns.forEach(btn => \{\
-                btn.addEventListener('click', () => \{\
-                    const theme = btn.dataset.theme;\
-                    generateWorkshopContent(theme);\
-                    workshopBtns.forEach(b => b.classList.remove('bg-teal-100'));\
-                    btn.classList.add('bg-teal-100');\
-                \});\
-            \});\
-\
-            const mobileNav = document.getElementById('mobile-nav');\
-            mobileNav.addEventListener('change', (e) => \{\
-                window.location.hash = e.target.value;\
-            \});\
-            \
-            const interactiveItems = document.querySelectorAll('.interactive-item');\
-            const modal = document.getElementById('modal');\
-            const closeModalBtn = document.getElementById('close-modal');\
-            const modalTitle = document.getElementById('modal-title');\
-            const modalContent = document.getElementById('modal-content');\
-\
-            interactiveItems.forEach(item => \{\
-                item.style.cursor = 'pointer';\
-                item.addEventListener('click', () => \{\
-                    modalTitle.textContent = item.dataset.title;\
-                    modalContent.textContent = item.dataset.content;\
-                    modal.classList.remove('hidden');\
-                    modal.classList.add('flex');\
-                \});\
-            \});\
-\
-            const closeModal = () => \{\
-                modal.classList.add('hidden');\
-                modal.classList.remove('flex');\
-            \};\
-\
-            closeModalBtn.addEventListener('click', closeModal);\
-            modal.addEventListener('click', (e) => \{\
-                if (e.target === modal) \{\
-                    closeModal();\
-                \}\
-            \});\
-\
-            const generateIdeasBtns = document.querySelectorAll('.generate-ideas-btn');\
-            generateIdeasBtns.forEach(btn => \{\
-                btn.addEventListener('click', async () => \{\
-                    const category = btn.closest('.card').dataset.category;\
-                    modalTitle.textContent = `$\{category\}\'82\'ccAI\'8a\'88\'97\'70\'83\'41\'83\'43\'83\'66\'83\'41`;\
-                    modalContent.innerHTML = '<span class="loading-spinner"></span> \'83\'41\'83\'43\'83\'66\'83\'41\'90\'b6\'90\'ac\'92\'86...';\
-                    modal.classList.remove('hidden');\
-                    modal.classList.add('flex');\
-\
-                    const prompt = `\'82\'a0\'82\'c8\'82\'bd\'82\'cd\'8b\'b3\'88\'e7\'8e\'d2\'82\'c5\'82\'b7\'81\'42\'8b\'b3\'88\'e7\'8c\'bb\'8f\'ea\'82\'cc$\{category\}\'82\'c9\'82\'a8\'82\'af\'82\'e9AI\'82\'cc\'8a\'88\'97\'70\'83\'41\'83\'43\'83\'66\'83\'41\'82\'f0\'81\'41\'8b\'ef\'91\'cc\'93\'49\'82\'c5\'8e\'c0\'91\'48\'93\'49\'82\'c8\'97\'e1\'82\'f03\'82\'c2\'89\'d3\'8f\'f0\'8f\'91\'82\'ab\'82\'c5\'92\'f1\'88\'c4\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42\'82\'bb\'82\'ea\'82\'bc\'82\'ea\'82\'cc\'83\'41\'83\'43\'83\'66\'83\'41\'82\'cd200\'8e\'9a\'88\'c8\'93\'e0\'82\'c5\'90\'e0\'96\'be\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42`;\
-                    const generatedIdeas = await sendPromptToGemini(prompt);\
-                    modalContent.textContent = generatedIdeas;\
-                \});\
-            \});\
-\
-\
-            const ctx = document.getElementById('impactChart').getContext('2d');\
-            const impactChart = new Chart(ctx, \{\
-                type: 'bar',\
-                data: \{\
-                    labels: ['\'8b\'b3\'8d\'de\'81\'45\'83\'65\'83\'58\'83\'67\'8d\'ec\'90\'ac', '\'95\'5d\'89\'bf\'81\'45\'83\'74\'83\'42\'81\'5b\'83\'68\'83\'6f\'83\'62\'83\'4e', '\'95\'db\'8c\'ec\'8e\'d2\'91\'ce\'89\'9e\'81\'45\'95\'b6\'8f\'91\'8d\'ec\'90\'ac', '\'8f\'ee\'95\'f1\'8e\'fb\'8f\'57\'81\'45\'8c\'a4\'8f\'43'],\
-                    datasets: [\{\
-                        label: '\'90\'f6\'8d\'dd\'93\'49\'82\'c8\'8e\'9e\'8a\'d4\'92\'5a\'8f\'6b\'97\'a6 (%)',\
-                        data: [50, 40, 60, 45],\
-                        backgroundColor: [\
-                            'rgba(13, 148, 136, 0.6)',\
-                            'rgba(14, 165, 233, 0.6)',\
-                            'rgba(217, 119, 6, 0.6)',\
-                            'rgba(107, 114, 128, 0.6)'\
-                        ],\
-                        borderColor: [\
-                            'rgba(13, 148, 136, 1)',\
-                            'rgba(14, 165, 233, 1)',\
-                            'rgba(217, 119, 6, 1)',\
-                            'rgba(107, 114, 128, 1)'\
-                        ],\
-                        borderWidth: 1\
-                    \}]\
-                \},\
-                options: \{\
-                    indexAxis: 'y',\
-                    responsive: true,\
-                    maintainAspectRatio: false,\
-                    plugins: \{\
-                        legend: \{\
-                            display: false\
-                        \},\
-                        tooltip: \{\
-                            callbacks: \{\
-                                label: function(context) \{\
-                                    return `$\{context.dataset.label\}: $\{context.raw\}%`;\
-                                \}\
-                            \}\
-                        \}\
-                    \},\
-                    scales: \{\
-                        x: \{\
-                            beginAtZero: true,\
-                            max: 100,\
-                            ticks: \{\
-                                callback: function(value) \{\
-                                    return value + '%'\
-                                \}\
-                            \},\
-                            grid: \{\
-                                color: 'rgba(200, 200, 200, 0.2)'\
-                            \}\
-                        \},\
-                        y: \{\
-                            grid: \{\
-                                display: false\
-                            \}\
-                        \}\
-                    \}\
-                \}\
-            \});\
-        \});\
-    </script>\
-\
-</body>\
-</html>\
-\
-}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6d6d6d; -webkit-text-stroke: #6d6d6d}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #0000ff; -webkit-text-stroke: #0000ff}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6b0001; -webkit-text-stroke: #6b0001}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #fb0007; -webkit-text-stroke: #fb0007}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; -webkit-text-stroke: #000000}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4d5055; -webkit-text-stroke: #4d5055}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #093c94; -webkit-text-stroke: #093c94}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #137646; -webkit-text-stroke: #137646}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; -webkit-text-stroke: #000000; min-height: 16.0px}
+    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #18702b; -webkit-text-stroke: #18702b}
+    span.s1 {font-kerning: none; background-color: #ecf1f7}
+    span.s2 {font-kerning: none; color: #fb0007; background-color: #ecf1f7; -webkit-text-stroke: 0px #fb0007}
+    span.s3 {font-kerning: none; color: #2a2a2a; background-color: #ecf1f7; -webkit-text-stroke: 0px #2a2a2a}
+    span.s4 {font-kerning: none; color: #6b0001; background-color: #ecf1f7; -webkit-text-stroke: 0px #6b0001}
+    span.s5 {font-kerning: none; color: #000000; background-color: #ecf1f7; -webkit-text-stroke: 0px #000000}
+    span.s6 {font-kerning: none; color: #0000ff; background-color: #ecf1f7; -webkit-text-stroke: 0px #0000ff}
+    span.s7 {font-kerning: none; color: #18702b; background-color: #ecf1f7; -webkit-text-stroke: 0px #18702b}
+    span.s8 {font-kerning: none; color: #093c94; background-color: #ecf1f7; -webkit-text-stroke: 0px #093c94}
+    span.s9 {font-kerning: none; color: #137646; background-color: #ecf1f7; -webkit-text-stroke: 0px #137646}
+    span.s10 {font-kerning: none; color: #6f0ec3; background-color: #ecf1f7; -webkit-text-stroke: 0px #6f0ec3}
+    span.s11 {font-kerning: none}
+    span.s12 {font-kerning: none; color: #0e6e6d; background-color: #ecf1f7; -webkit-text-stroke: 0px #0e6e6d}
+    span.s13 {font-kerning: none; color: #a4450b; background-color: #ecf1f7; -webkit-text-stroke: 0px #a4450b}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE</span><span class="s2"> html</span><span class="s1">&gt;</span></p>
+<p class="p2"><span class="s3">&lt;</span><span class="s4">html</span><span class="s5"> </span><span class="s2">lang</span><span class="s3">=</span><span class="s1">"ja"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"scroll-smooth"</span><span class="s3">&gt;</span></p>
+<p class="p3"><span class="s3">&lt;</span><span class="s1">head</span><span class="s3">&gt;</span></p>
+<p class="p4"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">meta</span><span class="s5"> </span><span class="s1">charset</span><span class="s3">=</span><span class="s6">"UTF-8"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">meta</span><span class="s5"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"viewport"</span><span class="s5"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"width=device-width, initial-scale=1.0"</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">title</span><span class="s3">&gt;</span><span class="s1">インタラクティブ研修プランニング | 教育現場におけるAI活用</span><span class="s3">&lt;/</span><span class="s4">title</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdn.tailwindcss.com"</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdn.jsdelivr.net/npm/chart.js"</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">link</span><span class="s5"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"preconnect"</span><span class="s5"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.googleapis.com"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">link</span><span class="s5"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"preconnect"</span><span class="s5"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.gstatic.com"</span><span class="s5"> </span><span class="s2">crossorigin</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">link</span><span class="s5"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght400;500;700&amp;display=swap"</span><span class="s5"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"stylesheet"</span><span class="s3">&gt;</span></p>
+<p class="p6"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Chosen Palette: Calm Harmony --&gt;</span></p>
+<p class="p6"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Application Structure Plan: The SPA is designed as a non-linear, thematic hub to allow users (presenters/attendees) to freely explore content. Instead of a rigid 9-step sequence, it's organized into four key sections: 1. **研修概要 (Overview)**: A quick summary of the training's purpose and flow. 2. **AI活用シーン (AI Use Cases)**: An interactive card-based section categorized by teaching activity (Prep, Practice, Admin) for intuitive exploration, enhanced with dynamic AI idea generation. 3. **ワークショップ体験 (Workshop Simulation)**: A hands-on simulation where AI dynamically generates content for chosen themes, making the abstract workshop concept tangible. 4. **効果の可視化 (Impact Visualization)**: A chart to visually represent the benefits of AI. This structure prioritizes user-driven discovery over linear presentation, making the plan more engaging and easier to digest. --&gt;</span></p>
+<p class="p6"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Visualization &amp; Content Choices: 1. **Training Flow (Goal: Organize)**: Presented as a CSS-based timeline for a clear visual path. Interaction: Hover effects. Method: HTML/Tailwind. 2. **AI Use Case Cards (Goal: Inform/Engage)**: Interactive cards that reveal details on click. New: "Generate more ideas" button calls Gemini API for dynamic content, enhancing interaction. Method: HTML/Tailwind/JS, Gemini API. 3. **Workshop Simulator (Goal: Engage/Demonstrate)**: Buttons trigger JS to call Gemini API, populating text areas with real-time AI-generated examples, simulating the creative process. Method: JS data objects, DOM manipulation, Gemini API. 4. **Impact Chart (Goal: Compare/Persuade)**: A Chart.js bar chart visualizes potential time savings, providing a compelling data point. Method: Chart.js with responsive canvas container. This approach uses the best interactive method for each piece of information, enhancing understanding. --&gt;</span></p>
+<p class="p6"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. --&gt;</span></p>
+<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">style</span><span class="s3">&gt;</span></p>
+<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s4">body</span><span class="s5"> { </span><span class="s1">font-family:</span><span class="s5"> </span><span class="s7">'Noto Sans JP'</span><span class="s5">, </span><span class="s8">sans-serif</span><span class="s5">; </span><span class="s1">background-color:</span><span class="s5"> </span><span class="s8">#fefbf3</span><span class="s5">; </span><span class="s1">color:</span><span class="s5"> </span><span class="s8">#4a5568</span><span class="s5">; }</span></p>
+<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s4">.nav-link</span><span class="s5"> { </span><span class="s1">transition:</span><span class="s5"> </span><span class="s8">all</span><span class="s5"> </span><span class="s9">0.3s</span><span class="s5"> </span><span class="s8">ease</span><span class="s5">; </span><span class="s1">border-bottom:</span><span class="s5"> </span><span class="s9">2px</span><span class="s5"> </span><span class="s8">solid</span><span class="s5"> </span><span class="s8">transparent</span><span class="s5">; }</span></p>
+<p class="p3"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.nav-link:hover</span><span class="s5">, </span><span class="s1">.nav-link.active</span><span class="s5"> { </span><span class="s2">color:</span><span class="s5"> </span><span class="s8">#0891b2</span><span class="s5">; </span><span class="s2">border-bottom-color:</span><span class="s5"> </span><span class="s8">#0891b2</span><span class="s5">; }</span></p>
+<p class="p7"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s4">.card</span><span class="s5"> { </span><span class="s2">transition:</span><span class="s5"> </span><span class="s1">transform</span><span class="s5"> </span><span class="s9">0.3s</span><span class="s5"> </span><span class="s1">ease</span><span class="s5">, </span><span class="s1">box-shadow</span><span class="s5"> </span><span class="s9">0.3s</span><span class="s5"> </span><span class="s1">ease</span><span class="s5">; }</span></p>
+<p class="p8"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s4">.card:hover</span><span class="s5"> { </span><span class="s2">transform:</span><span class="s5"> </span><span class="s8">translateY(</span><span class="s1">-5px</span><span class="s8">)</span><span class="s5">; </span><span class="s2">box-shadow:</span><span class="s5"> </span><span class="s1">0</span><span class="s5"> </span><span class="s1">10px</span><span class="s5"> </span><span class="s1">15px</span><span class="s5"> </span><span class="s1">-3px</span><span class="s5"> </span><span class="s8">rgba(</span><span class="s1">0</span><span class="s5">, </span><span class="s1">0</span><span class="s5">, </span><span class="s1">0</span><span class="s5">, </span><span class="s1">0.1</span><span class="s8">)</span><span class="s5">, </span><span class="s1">0</span><span class="s5"> </span><span class="s1">4px</span><span class="s5"> </span><span class="s1">6px</span><span class="s5"> </span><span class="s1">-2px</span><span class="s5"> </span><span class="s8">rgba(</span><span class="s1">0</span><span class="s5">, </span><span class="s1">0</span><span class="s5">, </span><span class="s1">0</span><span class="s5">, </span><span class="s1">0.05</span><span class="s8">)</span><span class="s5">; }</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">.section-fade-in</span><span class="s1"> { </span><span class="s2">animation:</span><span class="s1"> </span><span class="s8">fadeIn</span><span class="s1"> </span><span class="s9">1s</span><span class="s1"> </span><span class="s8">ease-in-out</span><span class="s1">; }</span></p>
+<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s10">@keyframes</span><span class="s5"> </span><span class="s8">fadeIn</span><span class="s5"> { </span><span class="s8">from</span><span class="s5"> { </span><span class="s1">opacity:</span><span class="s5"> </span><span class="s9">0</span><span class="s5">; </span><span class="s1">transform:</span><span class="s5"> </span><span class="s8">translateY(</span><span class="s9">20px</span><span class="s8">)</span><span class="s5">; } </span><span class="s8">to</span><span class="s5"> { </span><span class="s1">opacity:</span><span class="s5"> </span><span class="s9">1</span><span class="s5">; </span><span class="s1">transform:</span><span class="s5"> </span><span class="s8">translateY(</span><span class="s9">0</span><span class="s8">)</span><span class="s5">; } }</span></p>
+<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s4">.chart-container</span><span class="s5"> { </span><span class="s1">position:</span><span class="s5"> </span><span class="s8">relative</span><span class="s5">; </span><span class="s1">width:</span><span class="s5"> </span><span class="s9">100%</span><span class="s5">; </span><span class="s1">max-width:</span><span class="s5"> </span><span class="s9">800px</span><span class="s5">; </span><span class="s1">margin-left:</span><span class="s5"> </span><span class="s8">auto</span><span class="s5">; </span><span class="s1">margin-right:</span><span class="s5"> </span><span class="s8">auto</span><span class="s5">; </span><span class="s1">height:</span><span class="s5"> </span><span class="s9">350px</span><span class="s5">; </span><span class="s1">max-height:</span><span class="s5"> </span><span class="s9">400px</span><span class="s5">; }</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>@</span><span class="s4">media</span><span class="s1"> (</span><span class="s4">min-width:</span><span class="s1"> 768</span><span class="s4">px</span><span class="s1">) { .chart-container { </span><span class="s2">height:</span><span class="s1"> </span><span class="s9">400px</span><span class="s1">; } }</span></p>
+<p class="p4"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s4">.loading-spinner</span><span class="s5"> { </span><span class="s1">border:</span><span class="s5"> </span><span class="s9">4px</span><span class="s5"> </span><span class="s8">solid</span><span class="s5"> </span><span class="s8">rgba(</span><span class="s9">0</span><span class="s5">, </span><span class="s9">0</span><span class="s5">, </span><span class="s9">0</span><span class="s5">, </span><span class="s9">0.1</span><span class="s8">)</span><span class="s5">; </span><span class="s1">border-left-color:</span><span class="s5"> </span><span class="s8">#0891b2</span><span class="s5">; </span><span class="s1">border-radius:</span><span class="s5"> </span><span class="s9">50%</span><span class="s5">; </span><span class="s1">width:</span><span class="s5"> </span><span class="s9">24px</span><span class="s5">; </span><span class="s1">height:</span><span class="s5"> </span><span class="s9">24px</span><span class="s5">; </span><span class="s1">animation:</span><span class="s5"> </span><span class="s8">spin</span><span class="s5"> </span><span class="s9">1s</span><span class="s5"> </span><span class="s8">linear</span><span class="s5"> </span><span class="s8">infinite</span><span class="s5">; </span><span class="s1">display:</span><span class="s5"> </span><span class="s8">inline-block</span><span class="s5">; </span><span class="s1">vertical-align:</span><span class="s5"> </span><span class="s8">middle</span><span class="s5">; </span><span class="s1">margin-right:</span><span class="s5"> </span><span class="s9">8px</span><span class="s5">; }</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s10">@keyframes</span><span class="s1"> </span><span class="s8">spin</span><span class="s1"> { </span><span class="s9">0%</span><span class="s1"> { </span><span class="s2">transform:</span><span class="s1"> </span><span class="s8">rotate(</span><span class="s9">0deg</span><span class="s8">)</span><span class="s1">; } </span><span class="s9">100%</span><span class="s1"> { </span><span class="s2">transform:</span><span class="s1"> </span><span class="s8">rotate(</span><span class="s9">360deg</span><span class="s8">)</span><span class="s1">; } }</span></p>
+<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">style</span><span class="s3">&gt;</span></p>
+<p class="p3"><span class="s3">&lt;/</span><span class="s1">head</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s3">&lt;</span><span class="s4">body</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-amber-50"</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">header</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">nav</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"container mx-auto px-6 py-3"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex justify-between items-center"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">h1</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl md:text-2xl font-bold text-slate-700"</span><span class="s3">&gt;</span><span class="s5">ICTとAI活用研修</span><span class="s3">&lt;/</span><span class="s4">h1</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hidden md:flex space-x-8"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s5"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"#overview"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"nav-link text-slate-600 font-medium pb-1"</span><span class="s3">&gt;</span><span class="s5">研修概要</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s5"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"#use-cases"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"nav-link text-slate-600 font-medium pb-1"</span><span class="s3">&gt;</span><span class="s5">AI活用シーン</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s5"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"#workshop"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"nav-link text-slate-600 font-medium pb-1"</span><span class="s3">&gt;</span><span class="s5">ワークショップ体験</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">a</span><span class="s5"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"#impact"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"nav-link text-slate-600 font-medium pb-1"</span><span class="s3">&gt;</span><span class="s5">効果の可視化</span><span class="s3">&lt;/</span><span class="s4">a</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"md:hidden"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">select</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"mobile-nav"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white border border-slate-300 rounded-md py-1 px-2 text-slate-700"</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">option</span><span class="s1"> </span><span class="s2">value</span><span class="s3">=</span><span class="s6">"#overview"</span><span class="s3">&gt;</span><span class="s1">研修概要</span><span class="s3">&lt;/</span><span class="s4">option</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">option</span><span class="s1"> </span><span class="s2">value</span><span class="s3">=</span><span class="s6">"#use-cases"</span><span class="s3">&gt;</span><span class="s1">AI活用シーン</span><span class="s3">&lt;/</span><span class="s4">option</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">option</span><span class="s1"> </span><span class="s2">value</span><span class="s3">=</span><span class="s6">"#workshop"</span><span class="s3">&gt;</span><span class="s1">ワークショップ体験</span><span class="s3">&lt;/</span><span class="s4">option</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">option</span><span class="s1"> </span><span class="s2">value</span><span class="s3">=</span><span class="s6">"#impact"</span><span class="s3">&gt;</span><span class="s1">効果の可視化</span><span class="s3">&lt;/</span><span class="s4">option</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">select</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">nav</span><span class="s3">&gt;</span></p>
+<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">header</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">main</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"container mx-auto px-6 py-8 md:py-12"</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"overview"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mb-16 md:mb-24 section-fade-in"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4"</span><span class="s3">&gt;</span><span class="s5">教育の未来を拓く、AIとの協働</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-center max-w-3xl mx-auto text-slate-600 mb-12"</span><span class="s3">&gt;</span><span class="s1">この研修では、ICT機器、特にAIを日々の教育活動にどう取り入れ、業務の効率化と教育の質の向上を実現するかを学びます。単なるツール紹介に留まらず、先生方一人ひとりがAIを「頼れるパートナー」として活用するための、実践的なアイデアとスキルを習得することを目的とします。</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"relative mt-8"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hidden md:block absolute left-0 top-1/2 w-full h-0.5 bg-cyan-200"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-9 gap-4 text-center"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-col items-center"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold mb-2"</span><span class="s3">&gt;</span><span class="s5">1</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xs text-slate-500"</span><span class="s3">&gt;</span><span class="s1">導入</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-col items-center"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold mb-2"</span><span class="s3">&gt;</span><span class="s5">2</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xs text-slate-500"</span><span class="s3">&gt;</span><span class="s1">目標共有</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-col items-center"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold mb-2"</span><span class="s3">&gt;</span><span class="s5">3</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xs text-slate-500"</span><span class="s3">&gt;</span><span class="s1">現状と課題</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-col items-center"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-8 h-8 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold mb-2"</span><span class="s3">&gt;</span><span class="s5">4</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xs text-slate-500"</span><span class="s3">&gt;</span><span class="s1">基礎知識</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-col items-center"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-8 h-8 rounded-full bg-cyan-600 text-white flex items-center justify-center font-bold mb-2"</span><span class="s3">&gt;</span><span class="s5">5</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xs text-slate-500"</span><span class="s3">&gt;</span><span class="s1">活用事例</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-col items-center"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-8 h-8 rounded-full bg-cyan-700 text-white flex items-center justify-center font-bold mb-2"</span><span class="s3">&gt;</span><span class="s5">6</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xs text-slate-500"</span><span class="s3">&gt;</span><span class="s1">ワークショップ</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-col items-center"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-8 h-8 rounded-full bg-cyan-700 text-white flex items-center justify-center font-bold mb-2"</span><span class="s3">&gt;</span><span class="s5">7</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xs text-slate-500"</span><span class="s3">&gt;</span><span class="s1">発表</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                     </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-col items-center"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-8 h-8 rounded-full bg-cyan-800 text-white flex items-center justify-center font-bold mb-2"</span><span class="s3">&gt;</span><span class="s5">8</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xs text-slate-500"</span><span class="s3">&gt;</span><span class="s1">まとめ</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-col items-center"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-8 h-8 rounded-full bg-cyan-800 text-white flex items-center justify-center font-bold mb-2"</span><span class="s3">&gt;</span><span class="s5">9</span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xs text-slate-500"</span><span class="s3">&gt;</span><span class="s1">閉会</span><span class="s3">&lt;/</span><span class="s4">span</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">section</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"use-cases"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mb-16 md:mb-24 section-fade-in"</span><span class="s5"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"animation-delay: 0.2s;"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4"</span><span class="s3">&gt;</span><span class="s5">AIは、先生の「頼れるパートナー」</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-center max-w-3xl mx-auto text-slate-600 mb-12"</span><span class="s3">&gt;</span><span class="s1">AIは、授業準備から校務まで、様々な場面で先生方をサポートします。ここでは具体的な活用シーンを「授業準備」「授業実践」「校務効率化」の３つのカテゴリに分けてご紹介します。カードをクリックして詳細をご覧ください。</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid md:grid-cols-2 lg:grid-cols-3 gap-8"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"card bg-white p-6 rounded-lg shadow-lg"</span><span class="s5"> </span><span class="s2">data-category</span><span class="s3">=</span><span class="s1">"授業準備"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold text-teal-700 mb-3"</span><span class="s3">&gt;</span><span class="s5">💡 授業準備</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-slate-600 mb-4"</span><span class="s3">&gt;</span><span class="s1">教材作成、評価基準の策定など、準備にかかる時間を大幅に短縮します。</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">ul</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"space-y-3 text-sm"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"interactive-item"</span><span class="s5"> </span><span class="s2">data-title</span><span class="s3">=</span><span class="s1">"教材アイデアの生成"</span><span class="s5"> </span><span class="s2">data-content</span><span class="s3">=</span><span class="s1">"「小学5年生向けのSDGsに関するクイズを5問作成して」と指示するだけで、多様なアイデアを得られます。"</span><span class="s3">&gt;</span><span class="s5">✨ 教材アイデアの壁打ち</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"interactive-item"</span><span class="s5"> </span><span class="s2">data-title</span><span class="s3">=</span><span class="s1">"評価基準の明確化"</span><span class="s5"> </span><span class="s2">data-content</span><span class="s3">=</span><span class="s1">"「この作文課題のルーブリック評価の観点を3つ提案して」のように、客観的な評価基準を作成できます。"</span><span class="s3">&gt;</span><span class="s5">⚖️ 評価基準の素案作成</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"interactive-item"</span><span class="s5"> </span><span class="s2">data-title</span><span class="s3">=</span><span class="s1">"板書計画の構造化"</span><span class="s5"> </span><span class="s2">data-content</span><span class="s3">=</span><span class="s1">"単元のキーワードを渡すだけで、論理的な流れを持つ板書計画を構造化してくれます。"</span><span class="s3">&gt;</span><span class="s5">칠판 板書計画の構造化</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">ul</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">button</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"generate-ideas-btn bg-cyan-500 text-white px-4 py-2 rounded-full mt-4 hover:bg-cyan-600 transition w-full"</span><span class="s3">&gt;</span><span class="s5">✨ さらにアイデアを生成</span><span class="s3">&lt;/</span><span class="s4">button</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"card bg-white p-6 rounded-lg shadow-lg"</span><span class="s5"> </span><span class="s2">data-category</span><span class="s3">=</span><span class="s1">"授業実践"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold text-sky-700 mb-3"</span><span class="s3">&gt;</span><span class="s5">🚀 授業実践</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-slate-600 mb-4"</span><span class="s3">&gt;</span><span class="s1">個別最適化された学びや、生徒の創造性を引き出す活動を支援します。</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                     </span></span><span class="s3">&lt;</span><span class="s4">ul</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"space-y-3 text-sm"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"interactive-item"</span><span class="s5"> </span><span class="s2">data-title</span><span class="s3">=</span><span class="s1">"個別フィードバック支援"</span><span class="s5"> </span><span class="s2">data-content</span><span class="s3">=</span><span class="s1">"生徒の回答をAIに入力し、「この回答の良い点と改善点を教えて」と尋ねることで、個別指導のヒントを得られます。"</span><span class="s3">&gt;</span><span class="s5">🗣️ 個別フィードバック支援</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"interactive-item"</span><span class="s5"> </span><span class="s2">data-title</span><span class="s3">=</span><span class="s1">"多様な意見の提示"</span><span class="s5"> </span><span class="s2">data-content</span><span class="s3">=</span><span class="s1">"「この社会問題について、賛成・反対以外の第三の視点は？」のように、多角的な思考を促す問いを生成します。"</span><span class="s3">&gt;</span><span class="s5">🌐 思考を深める発問生成</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"interactive-item"</span><span class="s5"> </span><span class="s2">data-title</span><span class="s3">=</span><span class="s1">"創造的な協働学習"</span><span class="s5"> </span><span class="s2">data-content</span><span class="s3">=</span><span class="s1">"「この物語の続きを、登場人物Aの視点で書いて」といった指示で、生徒の創作活動を刺激します。"</span><span class="s3">&gt;</span><span class="s5">🎨 創造的ライティング支援</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">ul</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">button</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"generate-ideas-btn bg-cyan-500 text-white px-4 py-2 rounded-full mt-4 hover:bg-cyan-600 transition w-full"</span><span class="s3">&gt;</span><span class="s5">✨ さらにアイデアを生成</span><span class="s3">&lt;/</span><span class="s4">button</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"card bg-white p-6 rounded-lg shadow-lg"</span><span class="s5"> </span><span class="s2">data-category</span><span class="s3">=</span><span class="s1">"校務効率化"</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-xl font-bold text-amber-700 mb-3"</span><span class="s3">&gt;</span><span class="s1"> efficiently 校務効率化</span><span class="s3">&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-slate-600 mb-4"</span><span class="s3">&gt;</span><span class="s1">文書作成や情報収集など、日々の煩雑な業務をスマートにこなします。</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">ul</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"space-y-3 text-sm"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"interactive-item"</span><span class="s5"> </span><span class="s2">data-title</span><span class="s3">=</span><span class="s1">"保護者連絡文の作成"</span><span class="s5"> </span><span class="s2">data-content</span><span class="s3">=</span><span class="s1">"「来月の遠足に関する保護者向け案内文を、丁寧な言葉遣いで作成して」といった依頼で、質の高い文書を素早く作成。"</span><span class="s3">&gt;</span><span class="s5">保護者向け連絡文の作成</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"interactive-item"</span><span class="s5"> </span><span class="s2">data-title</span><span class="s3">=</span><span class="s1">"研修内容の要約"</span><span class="s5"> </span><span class="s2">data-content</span><span class="s3">=</span><span class="s1">"長い研修資料のテキストを貼り付け、「この内容を300字で要約して」と指示するだけで、要点を瞬時に把握できます。"</span><span class="s3">&gt;</span><span class="s5">研修内容の要約</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s4">li</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"interactive-item"</span><span class="s5"> </span><span class="s2">data-title</span><span class="s3">=</span><span class="s1">"情報収集の高速化"</span><span class="s5"> </span><span class="s2">data-content</span><span class="s3">=</span><span class="s1">"「最新のGIGAスクール構想に関する動向を教えて」のように、専門的な情報も効率的に収集できます。"</span><span class="s3">&gt;</span><span class="s5">情報収集と整理</span><span class="s3">&lt;/</span><span class="s4">li</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s4">ul</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">button</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"generate-ideas-btn bg-cyan-500 text-white px-4 py-2 rounded-full mt-4 hover:bg-cyan-600 transition w-full"</span><span class="s3">&gt;</span><span class="s5">✨ さらにアイデアを生成</span><span class="s3">&lt;/</span><span class="s4">button</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">section</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"workshop"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mb-16 md:mb-24 bg-teal-50/50 rounded-2xl p-6 md:p-10 section-fade-in"</span><span class="s5"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"animation-delay: 0.4s;"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4"</span><span class="s3">&gt;</span><span class="s5">体験しよう！AIとの授業デザイン</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-center max-w-3xl mx-auto text-slate-600 mb-12"</span><span class="s3">&gt;</span><span class="s1">ここでは、AIを活用した授業デザインのプロセスを擬似体験できます。テーマを選んでボタンをクリックすると、AIが生成した授業の各要素が下に表示されます。AIとの対話を通じて、授業のアイデアが形になっていく様子をご覧ください。</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-center mb-8 space-x-2 md:space-x-4"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">button</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"workshop-btn bg-white border border-teal-300 text-teal-800 px-4 py-2 rounded-full hover:bg-teal-100 transition"</span><span class="s5"> </span><span class="s2">data-theme</span><span class="s3">=</span><span class="s1">"kokugo"</span><span class="s3">&gt;</span><span class="s5">国語「物語の続きを創作」</span><span class="s3">&lt;/</span><span class="s4">button</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">button</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"workshop-btn bg-white border border-teal-300 text-teal-800 px-4 py-2 rounded-full hover:bg-teal-100 transition"</span><span class="s5"> </span><span class="s2">data-theme</span><span class="s3">=</span><span class="s1">"shakai"</span><span class="s3">&gt;</span><span class="s5">社会「未来の街づくり」</span><span class="s3">&lt;/</span><span class="s4">button</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">button</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"workshop-btn bg-white border border-teal-300 text-teal-800 px-4 py-2 rounded-full hover:bg-teal-100 transition"</span><span class="s5"> </span><span class="s2">data-theme</span><span class="s3">=</span><span class="s1">"eigo"</span><span class="s3">&gt;</span><span class="s5">英語「異文化交流のスキット作成」</span><span class="s3">&lt;/</span><span class="s4">button</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid md:grid-cols-3 gap-6 text-sm"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white p-4 rounded-lg shadow"</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h4</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold text-teal-700 mb-2"</span><span class="s3">&gt;</span><span class="s1">1. 導入の問いかけ</span><span class="s3">&lt;/</span><span class="s4">h4</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">pre</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"ws-output-1"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-slate-100 p-3 rounded text-slate-600 whitespace-pre-wrap h-32 overflow-y-auto"</span><span class="s3">&gt;</span><span class="s5">テーマを選んでください</span><span class="s3">&lt;/</span><span class="s4">pre</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white p-4 rounded-lg shadow"</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h4</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"font-bold text-teal-700 mb-2"</span><span class="s3">&gt;</span><span class="s1">2. 活動のヒント</span><span class="s3">&lt;/</span><span class="s4">h4</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">pre</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"ws-output-2"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-slate-100 p-3 rounded text-slate-600 whitespace-pre-wrap h-32 overflow-y-auto"</span><span class="s3">&gt;&lt;/</span><span class="s4">pre</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white p-4 rounded-lg shadow"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">h4</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"font-bold text-teal-700 mb-2"</span><span class="s3">&gt;</span><span class="s5">3. 評価の観点</span><span class="s3">&lt;/</span><span class="s4">h4</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">pre</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"ws-output-3"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-slate-100 p-3 rounded text-slate-600 whitespace-pre-wrap h-32 overflow-y-auto"</span><span class="s3">&gt;&lt;/</span><span class="s4">pre</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">section</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">section</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"impact"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mb-8 section-fade-in"</span><span class="s5"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"animation-delay: 0.6s;"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">             </span></span><span class="s3">&lt;</span><span class="s4">h2</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-3xl md:text-4xl font-bold text-center text-cyan-800 mb-4"</span><span class="s3">&gt;</span><span class="s5">AI活用による効果の可視化</span><span class="s3">&lt;/</span><span class="s4">h2</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-center max-w-3xl mx-auto text-slate-600 mb-12"</span><span class="s3">&gt;</span><span class="s1">AIを導入することで、具体的にどの業務がどれだけ効率化される可能性があるのでしょうか。このグラフは、AI活用による各業務の潜在的な時間短縮率を示しています。浮いた時間を、より創造的な教育活動や生徒との対話に充てることができます。</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-xl"</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                 </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"chart-container"</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s4">canvas</span><span class="s1"> </span><span class="s2">id</span><span class="s3">=</span><span class="s6">"impactChart"</span><span class="s3">&gt;&lt;/</span><span class="s4">canvas</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">section</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s4">main</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">footer</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-slate-800 text-white mt-16"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"container mx-auto px-6 py-8 text-center"</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"mb-2"</span><span class="s3">&gt;</span><span class="s1">今後の継続的な学習のために</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s6">"text-sm text-slate-400"</span><span class="s3">&gt;</span><span class="s1">文部科学省「GIGAスクール構想」や各種教育系メディアで最新情報をご確認ください。</span><span class="s3">&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">footer</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"modal"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white rounded-lg shadow-2xl max-w-lg w-full p-6 relative section-fade-in"</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">button</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"close-modal"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"absolute top-2 right-3 text-2xl text-slate-500 hover:text-slate-800"</span><span class="s3">&gt;</span><span class="s5">&amp;times;</span><span class="s3">&lt;/</span><span class="s4">button</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">h3</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"modal-title"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold text-cyan-800 mb-4"</span><span class="s3">&gt;&lt;/</span><span class="s4">h3</span><span class="s3">&gt;</span></p>
+<p class="p2"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s4">p</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"modal-content"</span><span class="s5"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-slate-600"</span><span class="s3">&gt;&lt;/</span><span class="s4">p</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">script</span><span class="s3">&gt;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>document.addEventListener(</span><span class="s7">'DOMContentLoaded'</span><span class="s1">, () =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> </span><span class="s12">API_KEY</span><span class="s1"> = </span><span class="s7">""</span><span class="s1">;<span class="Apple-converted-space"> </span></span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s5"> </span><span class="s12">API_URL</span><span class="s5"> = </span><span class="s1">"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="</span><span class="s5">;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> sendPromptToGemini = </span><span class="s10">async</span><span class="s1"> (prompt) =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s10">let</span><span class="s1"> chatHistory = [];</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>chatHistory.push({ role: </span><span class="s7">"user"</span><span class="s1">, parts: [{ text: prompt }] });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s10">const</span><span class="s1"> payload = { contents: chatHistory };</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s10">try</span><span class="s1"> {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">const</span><span class="s1"> response = </span><span class="s10">await</span><span class="s1"> fetch(</span><span class="s12">API_URL</span><span class="s1"> + </span><span class="s12">API_KEY</span><span class="s1">, {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>method: </span><span class="s7">'POST'</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>headers: { </span><span class="s7">'Content-Type'</span><span class="s1">: </span><span class="s7">'application/json'</span><span class="s1"> },</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>body: </span><span class="s12">JSON</span><span class="s1">.stringify(payload)</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">const</span><span class="s1"> result = </span><span class="s10">await</span><span class="s1"> response.json();</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">if</span><span class="s1"> (result.candidates &amp;&amp; result.candidates.length &gt; </span><span class="s13">0</span><span class="s1"> &amp;&amp;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>result.candidates[</span><span class="s13">0</span><span class="s1">].content &amp;&amp; result.candidates[</span><span class="s13">0</span><span class="s1">].content.parts &amp;&amp;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>result.candidates[</span><span class="s13">0</span><span class="s1">].content.parts.length &gt; </span><span class="s13">0</span><span class="s1">) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s10">return</span><span class="s1"> result.candidates[</span><span class="s13">0</span><span class="s1">].content.parts[</span><span class="s13">0</span><span class="s1">].text;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>} </span><span class="s10">else</span><span class="s1"> {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>console.error(</span><span class="s7">'Unexpected API response structure:'</span><span class="s1">, result);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s10">return</span><span class="s1"> </span><span class="s7">'アイデアの生成に失敗しました。'</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>} </span><span class="s10">catch</span><span class="s1"> (error) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.error(</span><span class="s7">'Error calling Gemini API:'</span><span class="s1">, error);</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s10">return</span><span class="s5"> </span><span class="s1">'ネットワークエラーによりアイデアの生成に失敗しました。'</span><span class="s5">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> workshopBtns = document.querySelectorAll(</span><span class="s7">'.workshop-btn'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> wsOutput1 = document.getElementById(</span><span class="s7">'ws-output-1'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> wsOutput2 = document.getElementById(</span><span class="s7">'ws-output-2'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> wsOutput3 = document.getElementById(</span><span class="s7">'ws-output-3'</span><span class="s1">);</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> generateWorkshopContent = </span><span class="s10">async</span><span class="s1"> (theme) =&gt; {</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                </span>wsOutput1.innerHTML = </span><span class="s1">'&lt;span class="loading-spinner"&gt;&lt;/span&gt; 生成中...'</span><span class="s5">;</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                </span>wsOutput2.innerHTML = </span><span class="s1">'&lt;span class="loading-spinner"&gt;&lt;/span&gt; 生成中...'</span><span class="s5">;</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                </span>wsOutput3.innerHTML = </span><span class="s1">'&lt;span class="loading-spinner"&gt;&lt;/span&gt; 生成中...'</span><span class="s5">;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s10">let</span><span class="s1"> prompt1, prompt2, prompt3;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s10">switch</span><span class="s1"> (theme) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">case</span><span class="s1"> </span><span class="s7">'kokugo'</span><span class="s1">:</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                        </span>prompt1 = </span><span class="s1">"国語の授業で「物語の続きを創作する」というテーマの導入で、生徒が興味を持つような問いかけを3つ提案してください。箇条書きでお願いします。"</span><span class="s5">;</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                        </span>prompt2 = </span><span class="s1">"国語の授業で「物語の続きを創作する」活動のヒントとして、生徒の創造性を引き出す具体的なアドバイスを2つ提案してください。箇条書きでお願いします。"</span><span class="s5">;</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                        </span>prompt3 = </span><span class="s1">"国語の授業で「物語の続きを創作する」という課題の評価観点を3つ提案してください。箇条書きでお願いします。"</span><span class="s5">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s10">break</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">case</span><span class="s1"> </span><span class="s7">'shakai'</span><span class="s1">:</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                        </span>prompt1 = </span><span class="s1">"社会科の授業で「未来の街づくり」というテーマの導入で、生徒が関心を持つような問いかけを3つ提案してください。箇条書きでお願いします。"</span><span class="s5">;</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                        </span>prompt2 = </span><span class="s1">"社会科の授業で「未来の街づくり」活動のヒントとして、多角的な視点や持続可能性を考慮させる具体的なアドバイスを2つ提案してください。箇条書きでお願いします。"</span><span class="s5">;</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                        </span>prompt3 = </span><span class="s1">"社会科の授業で「未来の街づくり」という課題の評価観点を3つ提案してください。箇条書きでお願いします。"</span><span class="s5">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s10">break</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">case</span><span class="s1"> </span><span class="s7">'eigo'</span><span class="s1">:</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                        </span>prompt1 = </span><span class="s1">"英語の授業で「異文化交流のスキット作成」というテーマの導入で、生徒が積極的に参加したくなるような問いかけを3つ提案してください。箇条書きでお願いします。回答は英語でお願いします。"</span><span class="s5">;</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                        </span>prompt2 = </span><span class="s1">"英語の授業で「異文化交流のスキット作成」活動のヒントとして、効果的なコミュニケーションや異文化理解を深める具体的なアドバイスを2つ提案してください。箇条書きでお願いします。回答は英語でお願いします。"</span><span class="s5">;</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                        </span>prompt3 = </span><span class="s1">"英語の授業で「異文化交流のスキット作成」という課題の評価観点を3つ提案してください。箇条書きでお願いします。回答は英語でお願いします。"</span><span class="s5">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s10">break</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s10">try</span><span class="s1"> {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">const</span><span class="s1"> [res1, res2, res3] = </span><span class="s10">await</span><span class="s1"> </span><span class="s12">Promise</span><span class="s1">.all([</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>sendPromptToGemini(prompt1),</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>sendPromptToGemini(prompt2),</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>sendPromptToGemini(prompt3)</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>]);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>wsOutput1.textContent = res1;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>wsOutput2.textContent = res2;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>wsOutput3.textContent = res3;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>} </span><span class="s10">catch</span><span class="s1"> (error) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.error(</span><span class="s7">'Error generating workshop content:'</span><span class="s1">, error);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>wsOutput1.textContent = </span><span class="s7">'コンテンツの生成中にエラーが発生しました。'</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>wsOutput2.textContent = </span><span class="s7">'コンテンツの生成中にエラーが発生しました。'</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>wsOutput3.textContent = </span><span class="s7">'コンテンツの生成中にエラーが発生しました。'</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>workshopBtns.forEach(btn =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>btn.addEventListener(</span><span class="s7">'click'</span><span class="s1">, () =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">const</span><span class="s1"> theme = btn.dataset.theme;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>generateWorkshopContent(theme);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>workshopBtns.forEach(b =&gt; b.classList.remove(</span><span class="s7">'bg-teal-100'</span><span class="s1">));</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>btn.classList.add(</span><span class="s7">'bg-teal-100'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> mobileNav = document.getElementById(</span><span class="s7">'mobile-nav'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>mobileNav.addEventListener(</span><span class="s7">'change'</span><span class="s1">, (e) =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>window.location.hash = e.target.value;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p9"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> interactiveItems = document.querySelectorAll(</span><span class="s7">'.interactive-item'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> modal = document.getElementById(</span><span class="s7">'modal'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> closeModalBtn = document.getElementById(</span><span class="s7">'close-modal'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> modalTitle = document.getElementById(</span><span class="s7">'modal-title'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> modalContent = document.getElementById(</span><span class="s7">'modal-content'</span><span class="s1">);</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>interactiveItems.forEach(item =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>item.style.cursor = </span><span class="s7">'pointer'</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>item.addEventListener(</span><span class="s7">'click'</span><span class="s1">, () =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>modalTitle.textContent = item.dataset.title;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>modalContent.textContent = item.dataset.content;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>modal.classList.remove(</span><span class="s7">'hidden'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>modal.classList.add(</span><span class="s7">'flex'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> closeModal = () =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>modal.classList.add(</span><span class="s7">'hidden'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>modal.classList.remove(</span><span class="s7">'flex'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>closeModalBtn.addEventListener(</span><span class="s7">'click'</span><span class="s1">, closeModal);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>modal.addEventListener(</span><span class="s7">'click'</span><span class="s1">, (e) =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s10">if</span><span class="s1"> (e.target === modal) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>closeModal();</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> generateIdeasBtns = document.querySelectorAll(</span><span class="s7">'.generate-ideas-btn'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>generateIdeasBtns.forEach(btn =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>btn.addEventListener(</span><span class="s7">'click'</span><span class="s1">, </span><span class="s10">async</span><span class="s1"> () =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">const</span><span class="s1"> category = btn.closest(</span><span class="s7">'.card'</span><span class="s1">).dataset.category;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>modalTitle.textContent = </span><span class="s7">`</span><span class="s1">${category}</span><span class="s7">のAI活用アイデア`</span><span class="s1">;</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                    </span>modalContent.innerHTML = </span><span class="s1">'&lt;span class="loading-spinner"&gt;&lt;/span&gt; アイデア生成中...'</span><span class="s5">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>modal.classList.remove(</span><span class="s7">'hidden'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>modal.classList.add(</span><span class="s7">'flex'</span><span class="s1">);</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                    </span></span><span class="s10">const</span><span class="s5"> prompt = </span><span class="s1">`あなたは教育者です。教育現場の</span><span class="s5">${category}</span><span class="s1">におけるAIの活用アイデアを、具体的で実践的な例を3つ箇条書きで提案してください。それぞれのアイデアは200字以内で説明してください。`</span><span class="s5">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">const</span><span class="s1"> generatedIdeas = </span><span class="s10">await</span><span class="s1"> sendPromptToGemini(prompt);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>modalContent.textContent = generatedIdeas;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> ctx = document.getElementById(</span><span class="s7">'impactChart'</span><span class="s1">).getContext(</span><span class="s7">'2d'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">const</span><span class="s1"> impactChart = </span><span class="s10">new</span><span class="s1"> </span><span class="s12">Chart</span><span class="s1">(ctx, {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>type: </span><span class="s7">'bar'</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>data: {</span></p>
+<p class="p10"><span class="s5"><span class="Apple-converted-space">                    </span>labels: [</span><span class="s1">'教材・テスト作成'</span><span class="s5">, </span><span class="s1">'評価・フィードバック'</span><span class="s5">, </span><span class="s1">'保護者対応・文書作成'</span><span class="s5">, </span><span class="s1">'情報収集・研修'</span><span class="s5">],</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>datasets: [{</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>label: </span><span class="s7">'潜在的な時間短縮率 (%)'</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>data: [</span><span class="s13">50</span><span class="s1">, </span><span class="s13">40</span><span class="s1">, </span><span class="s13">60</span><span class="s1">, </span><span class="s13">45</span><span class="s1">],</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>backgroundColor: [</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s7">'rgba(13, 148, 136, 0.6)'</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s7">'rgba(14, 165, 233, 0.6)'</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s7">'rgba(217, 119, 6, 0.6)'</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s7">'rgba(107, 114, 128, 0.6)'</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>],</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>borderColor: [</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s7">'rgba(13, 148, 136, 1)'</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s7">'rgba(14, 165, 233, 1)'</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s7">'rgba(217, 119, 6, 1)'</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s7">'rgba(107, 114, 128, 1)'</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>],</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>borderWidth: </span><span class="s13">1</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}]</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>},</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>options: {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>indexAxis: </span><span class="s7">'y'</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>responsive: </span><span class="s10">true</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>maintainAspectRatio: </span><span class="s10">false</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>plugins: {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>legend: {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>display: </span><span class="s10">false</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>},</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>tooltip: {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>callbacks: {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>label: </span><span class="s10">function</span><span class="s1">(context) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span></span><span class="s10">return</span><span class="s1"> </span><span class="s7">`</span><span class="s1">${context.dataset.label}</span><span class="s7">: </span><span class="s1">${context.raw}</span><span class="s7">%`</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>},</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>scales: {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>x: {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>beginAtZero: </span><span class="s10">true</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>max: </span><span class="s13">100</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>ticks: {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>callback: </span><span class="s10">function</span><span class="s1">(value) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                                    </span></span><span class="s10">return</span><span class="s1"> value + </span><span class="s7">'%'</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>},</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>grid: {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>color: </span><span class="s7">'rgba(200, 200, 200, 0.2)'</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>},</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>y: {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>grid: {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                                </span>display: </span><span class="s10">false</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
+<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">script</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+<p class="p3"><span class="s3">&lt;/</span><span class="s1">body</span><span class="s3">&gt;</span></p>
+<p class="p3"><span class="s3">&lt;/</span><span class="s1">html</span><span class="s3">&gt;</span></p>
+<p class="p9"><span class="s11"></span><br></p>
+</body>
+</html>
